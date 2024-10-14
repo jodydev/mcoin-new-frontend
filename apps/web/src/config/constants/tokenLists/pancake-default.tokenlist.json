@@ -1,0 +1,33 @@
+{
+  "name": "Uniswap Labs Default",
+  "timestamp": "2023-11-13T15:59:22.657Z",
+  "version": {
+    "major": 11,
+    "minor": 9,
+    "patch": 0
+  },
+  "tags": {},
+  "logoURI": "ipfs://QmNa8mQkrNKp1WEEeGjFezDmDeodkWRevGFN8JCV7b4Xir",
+  "keywords": [
+    "uniswap",
+    "default"
+  ],
+  "tokens": [
+    {
+      "name": "Tether USD",
+      "symbol": "USDT",
+      "address": "0xa58f8364D2dfa7b1d6F3eFBdacc5046564396785",
+      "chainId": 323,
+      "decimals": 6,
+      "logoURI": "https://tokens.pancakeswap.finance/images/symbol/usdt.png"
+    },
+    {
+      "name": "Riser",
+      "symbol": "RIS",
+      "address": "0x6590ce5c03687b19690a2d72bcfc61fa18cf33db",
+      "chainId": 323,
+      "decimals": 18,
+      "logoURI": "https://i.imghippo.com/files/oiMt61717603908.png"
+    }
+  ]
+}

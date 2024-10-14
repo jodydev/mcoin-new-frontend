@@ -1,0 +1,4 @@
+// MCOIN Address
+const BNB_ADDRESS = '0xAc2fE71FED3BA1090a50491FE6Be941FBcbcc1Bf'
+
+export { BNB_ADDRESS }

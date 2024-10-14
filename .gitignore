@@ -1,0 +1,56 @@
+# Crea un file .gitignore con le seguenti regole comuni
+
+# Sistema operativo
+.DS_Store
+Thumbs.db
+
+# Node.js
+node_modules/
+npm-debug.log
+yarn-error.log
+
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.pdb
+*.egg
+*.egg-info/
+dist/
+build/
+*.so
+
+# Java
+*.class
+*.jar
+*.war
+*.ear
+*.class
+*.log
+*.jmx
+*.jtl
+*.hprof
+*.pid
+hs_err_pid*
+
+# Visual Studio Code
+.vscode/
+.history/
+
+# Logs
+logs/
+*.log
+
+# IDEs
+.idea/
+*.iml
+*.ipr
+*.iws
+
+# MacOS
+.DS_Store
+
+# Windows
+Thumbs.db
+ehthumbs.db
