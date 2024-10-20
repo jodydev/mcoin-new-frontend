@@ -18,7 +18,8 @@ const Button = <E extends ElementType = "button">(props: ButtonProps<E>): JSX.El
   }
 
   return (
-    <StyledButton
+    <>
+        <StyledButton
       $isLoading={isLoading}
       className={classNames.join(" ")}
       disabled={isDisabled}
@@ -39,6 +40,8 @@ const Button = <E extends ElementType = "button">(props: ButtonProps<E>): JSX.El
           })}
       </>
     </StyledButton>
+    </>
+
   );
 };
 

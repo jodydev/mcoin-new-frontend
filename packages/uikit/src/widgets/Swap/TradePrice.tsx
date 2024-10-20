@@ -19,17 +19,19 @@ export function TradePrice({ price }: TradePriceProps) {
     : `${price?.baseCurrency?.symbol} per ${price?.quoteCurrency?.symbol}`;
 
   return (
-    <Text style={{ justifyContent: "center", alignItems: "center", display: "flex", fontSize: "14px" }}>
+    <div className="flex items-center mb-3">
+      <Text style={{ display: "flex", fontSize: "14px" }}>
       {show ? (
         <>
-          {formattedPrice ?? "-"} {label}
-          <AtomBox className={balanceMaxMiniClass} onClick={() => setShowInverted(!showInverted)}>
-            <AutoRenewIcon width="14px" />
-          </AtomBox>
+        {formattedPrice ?? "-"} {label}
+        <div onClick={() => setShowInverted(!showInverted)} style={{ marginLeft: "8px", cursor: "pointer" }}>
+          <AutoRenewIcon width="14px" />
+        </div>
         </>
       ) : (
         "-"
       )}
-    </Text>
+      </Text>
+    </div>
   );
 }

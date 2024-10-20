@@ -1,3 +1,5 @@
+import '../style/styles.css'
+import 'bootstrap/dist/css/bootstrap.min.css'
 import '@pancakeswap/ui/css/reset.css'
 import { ResetCSS, ScrollToTopButtonV2, ToastListener } from '@pancakeswap/uikit'
 import BigNumber from 'bignumber.js'

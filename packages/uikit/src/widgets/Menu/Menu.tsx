@@ -14,13 +14,22 @@ import { SubMenuItems } from "../../components/SubMenuItems";
 import { useMatchBreakpoints } from "../../contexts";
 import Logo from "./components/Logo";
 import Panel from "./components/Panel";
-import { MENU_HEIGHT, MOBILE_MENU_HEIGHT, TOP_BANNER_HEIGHT, TOP_BANNER_HEIGHT_MOBILE, SIDEBAR_WIDTH_REDUCED, SIDEBAR_WIDTH_FULL } from "./config";
+import {
+  MENU_HEIGHT,
+  MOBILE_MENU_HEIGHT,
+  TOP_BANNER_HEIGHT,
+  TOP_BANNER_HEIGHT_MOBILE,
+  SIDEBAR_WIDTH_REDUCED,
+  SIDEBAR_WIDTH_FULL,
+} from "./config";
 import { MenuContext } from "./context";
 import { NavProps } from "./types";
 import { SkeletonV2 } from "../../components/Skeleton";
 import { ThemeSwitcher } from "../../components/ThemeSwitcher";
 import { PageOverlay } from "../../components/PageOverlay";
 import { Button, NextLinkFromReactRouter } from "../../components";
+import Accordion from "../../../../uikit/src/widgets/Menu/components/Accordion";
+import { width } from "styled-system";
 
 const Wrapper = styled.div`
   position: relative;
@@ -65,7 +74,7 @@ const TopBannerContainer = styled.div<{ height: number }>`
 
 const BodyWrapper = styled(Box)`
   position: relative;
-  display: flex;;
+  display: flex;
 `;
 
 const Inner = styled.div<{ isPushed: boolean; showMenu: boolean; isHome: boolean }>`
@@ -74,8 +83,10 @@ const Inner = styled.div<{ isPushed: boolean; showMenu: boolean; isHome: boolean
   transform: translate3d(0, 0, 0);
   max-width: 100%;
   ${({ theme }) => theme.mediaQueries.lg} {
-    margin-left: ${({ isPushed, isHome }) => `${isHome ? 0 : isPushed ? SIDEBAR_WIDTH_FULL + 10 : SIDEBAR_WIDTH_REDUCED}px`};
-    max-width: ${({ isPushed, isHome }) => `calc(100% - ${isHome ? 0 : isPushed ? SIDEBAR_WIDTH_FULL + 10 : SIDEBAR_WIDTH_REDUCED}px)`};
+    margin-left: ${({ isPushed, isHome }) =>
+      `${isHome ? 0 : isPushed ? SIDEBAR_WIDTH_FULL + 10 : SIDEBAR_WIDTH_REDUCED}px`};
+    max-width: ${({ isPushed, isHome }) =>
+      `calc(100% - ${isHome ? 0 : isPushed ? SIDEBAR_WIDTH_FULL + 10 : SIDEBAR_WIDTH_REDUCED}px)`};
   }
 `;
 
@@ -152,9 +163,9 @@ const Menu: React.FC<React.PropsWithChildren<NavProps>> = ({
   // Find the home link if provided
   const homeLink = links.find((link) => link.label === "Home");
 
-  const isHome = activeItem === '/disabled'; // isHome logic causes issues with responsiveness at the home page
-  const isRoot = activeItem === '/';
-  const isNft = (activeItem === '/nft' || activeItem === '/viewNFTs' || activeItem === '/nftmarket');
+  const isHome = activeItem === "/disabled"; // isHome logic causes issues with responsiveness at the home page
+  const isRoot = activeItem === "/";
+  const isNft = activeItem === "/nft" || activeItem === "/viewNFTs" || activeItem === "/nftmarket";
   // const isIlo = activeItem === '/ilo';
 
   const subLinksWithoutMobile = subLinks?.filter((subLink) => !subLink.isMobileOnly);
@@ -162,18 +173,20 @@ const Menu: React.FC<React.PropsWithChildren<NavProps>> = ({
   const providerValue = useMemo(() => ({ linkComponent }), [linkComponent]);
   return (
     <MenuContext.Provider value={providerValue}>
-      <AtomBox
-        asChild
-        minHeight={{
-          xs: "auto",
-          md: "100vh",
-        }}
-      >
-        <Wrapper>
-          <FixedContainer showMenu={showMenu} height={totalTopMenuHeight}>
-            {/* {banner && isMounted && <TopBannerContainer height={topBannerHeight}>{banner}</TopBannerContainer>} */}
-            <StyledNav>
-              {/* <Flex width="100%"> */}
+
+      <div className="my-wrapper">
+        <AtomBox
+          asChild
+          minHeight={{
+            xs: "auto",
+            md: "100vh",
+          }}
+        >
+          <Wrapper>
+            <FixedContainer showMenu={showMenu} height={totalTopMenuHeight}>
+              {/* {banner && isMounted && <TopBannerContainer height={topBannerHeight}>{banner}</TopBannerContainer>} */}
+              <StyledNav>
+                {/* <Flex width="100%"> */}
                 <Logo
                   isHome={isHome}
                   isPushed={isPushed}
@@ -182,11 +195,67 @@ const Menu: React.FC<React.PropsWithChildren<NavProps>> = ({
                   // href={homeLink?.href ?? "/"}
                   href="/"
                 />
+
+                <div className="d-flex flex-row w-100 my-margin">
+                  {links.map(({ label, items: menuItems = [], href, icon, disabled }) => {
+                    // const calloutClass = entry.calloutClass ? entry.calloutClass : undefined;
+                    const statusColor = menuItems?.find((menuItem) => menuItem.status !== undefined)?.status?.color;
+                    const linkProps = menuItems && menuItems.length > 0 ? {} : { href };
+                    const isActive = href === activeItem;
+
+                    return (
+                      <div>
+                        <Accordion
+                          key={href}
+                          isPushed={isPushed}
+                          icon={icon}
+                          label={label}
+                          href={href}
+                          statusColor={statusColor}
+                          isDisabled={disabled}
+                          className={undefined}
+                          isActive={isActive}
+                          hasSubItems={menuItems.length > 0}
+                        >
+                          {isPushed &&
+                            menuItems.map((item) => (
+                              <MenuItem
+                                key={item.href}
+                                href={item.href}
+                                variant="subMenu"
+                                isActive={item.href === activeSubItem}
+                                statusColor={statusColor}
+                                isDisabled={disabled}
+                              >
+                                {item.label}
+                              </MenuItem>
+                            ))}
+                        </Accordion>
+                      </div>
+                    );
+                  })}
+                </div>
+
+                {/* <Panel
+              isPushed={isPushed}
+              isMobile={isMobile}
+              showMenu={showMenu}
+              isDark={isDark}
+              toggleTheme={toggleTheme}
+              langs={langs}
+              setLang={setLang}
+              currentLang={currentLang}
+              cakePriceUsd={cakePriceUsd}
+              pushNav={setIsPushed}
+              links={links}
+              activeItem={activeItem}
+              activeSubItem={activeSubItem}
+            /> */}
                 {/* <AtomBox display={{ xs: "none", md: "block" }}>
                   <MenuItems items={links} activeItem={activeItem} activeSubItem={activeSubItem} />
                 </AtomBox> */}
-              {/* </Flex> */}
-              {/* <Flex alignItems="center" height="100%">
+                {/* </Flex> */}
+                {/* <Flex alignItems="center" height="100%">
                 <AtomBox mr="12px" display={{ xs: "none", lg: "block" }}>
                   <CakePrice buyCakeLink={buyCakeLink} showSkeleton={false} cakePriceUsd={cakePriceUsd} />
                 </AtomBox> */}
@@ -203,56 +272,45 @@ const Menu: React.FC<React.PropsWithChildren<NavProps>> = ({
                 {/* <SkeletonV2 variant="round" width="32px" height="32px" isDataReady={isMounted} ml="8px" >
                   <ThemeSwitcher isDark={isDark} toggleTheme={toggleTheme} />
                 </SkeletonV2> */}
-                <Flex>
-                {/* {leftSide} */}
-                {rightSide}
-                </Flex>
-              {/* </Flex> */}
-            </StyledNav>
-          </FixedContainer>
-          <BodyWrapper mt={!isHome ? `${totalTopMenuHeight + 1}px` : `0`}>
-            <Panel
-              isPushed={isPushed}
-              isMobile={isMobile}
-              showMenu={showMenu}
-              isDark={isDark}
-              toggleTheme={toggleTheme}
-              langs={langs}
-              setLang={setLang}
-              currentLang={currentLang}
-              cakePriceUsd={cakePriceUsd}
-              pushNav={setIsPushed}
-              links={links}
-              activeItem={activeItem}
-              activeSubItem={activeSubItem}
-            />
-            <Inner isPushed={isPushed} showMenu={showMenu} isHome={isHome}>
-              {subLinks && subLinks.length > 1 && !isNft ? (
-                <Flex justifyContent="space-around" overflow="hidden">
-                  <SubMenuItems
-                    items={subLinksWithoutMobile}
-                    mt={`${totalTopMenuHeight + 1}px`}
-                    activeItem={activeSubItem}
-                  />
-
-                  {subLinksMobileOnly && subLinksMobileOnly?.length > 0 && (
+                <div className="button-connect-nav my-bg-primary p-1 rounded-5">
+                  {/* {leftSide} */}
+                  {rightSide}
+                </div>
+                {/* </Flex> */}
+              </StyledNav>
+            </FixedContainer>
+            <BodyWrapper mt={!isHome ? `${totalTopMenuHeight + 1}px` : `0`}>
+              <Inner isPushed={isPushed} showMenu={showMenu} isHome={isHome}>
+                {subLinks && subLinks.length > 1 && !isNft ? (
+                  <Flex justifyContent="space-around" overflow="hidden">
                     <SubMenuItems
-                      items={subLinksMobileOnly}
+                      items={subLinksWithoutMobile}
                       mt={`${totalTopMenuHeight + 1}px`}
                       activeItem={activeSubItem}
-                      isMobileOnly
                     />
-                  )}
-                </Flex>
-              ) : (
-                <div />
-              )}
-              {children}
-            </Inner>
-            {!isHome && <MobileOnlyOverlay show={isPushed} onClick={() => setIsPushed(false)} role="presentation" />}
-          </BodyWrapper>
-        </Wrapper>
-      </AtomBox>
+
+                    {subLinksMobileOnly && subLinksMobileOnly?.length > 0 && (
+                      <SubMenuItems
+                        items={subLinksMobileOnly}
+                        mt={`${totalTopMenuHeight + 1}px`}
+                        activeItem={activeSubItem}
+                        isMobileOnly
+                      />
+                    )}
+                  </Flex>
+                ) : (
+                  <div />
+                )}
+                {children}
+              </Inner>
+              {!isHome && <MobileOnlyOverlay show={isPushed} onClick={() => setIsPushed(false)} role="presentation" />}
+            </BodyWrapper>
+          </Wrapper>
+        </AtomBox>
+      </div>
+
+
+
       {/* <Footer
         items={footerLinks}
         isDark={isDark}

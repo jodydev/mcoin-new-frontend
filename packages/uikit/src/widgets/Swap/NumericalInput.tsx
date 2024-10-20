@@ -32,7 +32,7 @@ export const NumericalInput = memo(function InnerInput({
   const { isMobile } = useMatchBreakpoints();
 
   return (
-    <input style={isMobile ? undefined : { width: "auto" }}
+    <input id="input" style={isMobile ? undefined : { width: "auto" }}
       className={clsx(
         className,
         inputVariants({
@@ -58,7 +58,6 @@ export const NumericalInput = memo(function InnerInput({
       minLength={1}
       maxLength={79}
       spellCheck="false"
-      // width="100%"
     />
   );
 });

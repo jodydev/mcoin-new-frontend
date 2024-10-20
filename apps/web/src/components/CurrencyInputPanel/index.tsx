@@ -1,49 +1,64 @@
-import { useMemo, useState } from 'react'
-import { Currency, Pair, Token, CurrencyAmount, Percent } from '@pancakeswap/sdk'
-import { Button, ChevronDownIcon, Text, useModal, Flex, Box, NumericalInput, CopyButton } from '@pancakeswap/uikit'
-import styled, { css } from 'styled-components'
-import { isAddress } from 'utils'
-import { useTranslation } from '@pancakeswap/localization'
-import { WrappedTokenInfo } from '@pancakeswap/token-lists'
+import { useMemo, useState } from "react";
+import {
+  Currency,
+  Pair,
+  Token,
+  CurrencyAmount,
+  Percent,
+} from "@pancakeswap/sdk";
+import {
+  Button,
+  ChevronDownIcon,
+  Text,
+  useModal,
+  Flex,
+  Box,
+  NumericalInput,
+  CopyButton,
+} from "@pancakeswap/uikit";
+import styled, { css } from "styled-components";
+import { isAddress } from "utils";
+import { useTranslation } from "@pancakeswap/localization";
+import { WrappedTokenInfo } from "@pancakeswap/token-lists";
 
-import { useBUSDCurrencyAmount } from 'hooks/useBUSDPrice'
-import { formatNumber } from '@pancakeswap/utils/formatBalance'
-import { StablePair } from 'views/AddLiquidity/AddStableLiquidity/hooks/useStableLPDerivedMintInfo'
+import { useBUSDCurrencyAmount } from "hooks/useBUSDPrice";
+import { formatNumber } from "@pancakeswap/utils/formatBalance";
+import { StablePair } from "views/AddLiquidity/AddStableLiquidity/hooks/useStableLPDerivedMintInfo";
 
-import { useAccount } from 'wagmi'
-import { useCurrencyBalance } from '../../state/wallet/hooks'
-import CurrencySearchModal from '../SearchModal/CurrencySearchModal'
-import { CurrencyLogo, DoubleCurrencyLogo } from '../Logo'
+import { useAccount } from "wagmi";
+import { useCurrencyBalance } from "../../state/wallet/hooks";
+import CurrencySearchModal from "../SearchModal/CurrencySearchModal";
+import { CurrencyLogo, DoubleCurrencyLogo } from "../Logo";
 
-import AddToWalletButton from '../AddToWallet/AddToWalletButton'
+import AddToWalletButton from "../AddToWallet/AddToWalletButton";
 
 const InputRow = styled.div<{ selected: boolean }>`
   display: flex;
   flex-flow: row nowrap;
   align-items: center;
   justify-content: flex-end;
-  padding: ${({ selected }) => (selected ? '0.75rem 0.5rem 0.75rem 1rem' : '0.75rem 0.75rem 0.75rem 1rem')};
-`
+  padding: ${({ selected }) =>
+    selected ? "0.75rem 0.5rem 0.75rem 1rem" : "0.75rem 0.75rem 0.75rem 1rem"};
+`;
 
-const CurrencySelectButton = styled(Button).attrs({ variant: 'text', scale: 'sm' })<{ zapStyle?: ZapStyle }>`
-  padding-bottom: 14px;
-  padding: 0 0.5rem;
+const CurrencySelectButton = styled(Button).attrs({
+  variant: "text",
+  scale: "sm",
+})<{ zapStyle?: ZapStyle }>`
+  padding: 30px;
   margin-right: 10px;
   ${({ zapStyle, theme }) =>
     zapStyle &&
     css`
       padding: 8px;
-      // background: ${theme.colors.background};
-      // border: 1px solid ${theme.colors.cardBorder};
-      border-radius: ${zapStyle === 'zap' ? '0px' : '8px'} 8px 0px 0px;
+      border-radius: ${zapStyle === "zap" ? "0px" : "8px"} 8px 0px 0px;
       height: auto;
     `};
-`
+`;
 
 const Container = styled(Box)`
-  background-color: ${({ theme }) => theme.colors.input};
-  border-radius: 16px;
-`
+
+`;
 
 const LabelRow = styled.div`
   display: flex;
@@ -53,65 +68,54 @@ const LabelRow = styled.div`
   font-size: 0.75rem;
   line-height: 1rem;
   padding: 0.75rem 1rem 0 1rem;
-`
+`;
 const InputPanel = styled.div`
   display: flex;
   flex-flow: column nowrap;
   position: relative;
   // background-color: ${({ theme }) => theme.colors.backgroundAlt};
   z-index: 1;
-`
+`;
 const InputContainer = styled.div<{ zapStyle?: ZapStyle; error?: boolean }>`
   width: 100%;
-  min-width: 100px;
-  border-radius: 8px;
-  // background-color: ${({ theme }) => theme.colors.input};
-  // box-shadow: ${({ theme, error }) => theme.shadows[error ? 'warning' : 'inset']};
-  // border: 1px solid ${({ theme }) => theme.colors.cardBorder};
-  padding-bottom: 0.75rem;
-  ${({ zapStyle }) =>
-    !!zapStyle &&
-    css`
-      border-radius: 0px 16px 16px 16px;
-    `};
-`
+`;
 
 const Overlay = styled.div`
   position: absolute;
   inset: 0;
   opacity: 0.6;
   background-color: ${({ theme }) => theme.colors.backgroundAlt};
-`
+`;
 
-type ZapStyle = 'noZap' | 'zap'
+type ZapStyle = "noZap" | "zap";
 
 interface CurrencyInputPanelProps {
-  value: string
-  onUserInput: (value: string) => void
-  onInputBlur?: () => void
-  onPercentInput?: (percent: number) => void
-  onMax?: () => void
-  showQuickInputButton?: boolean
-  showMaxButton: boolean
-  maxAmount?: CurrencyAmount<Currency>
-  lpPercent?: string
-  label?: string
-  onCurrencySelect?: (currency: Currency) => void
-  currency?: Currency | null
-  disableCurrencySelect?: boolean
-  hideBalance?: boolean
-  pair?: Pair | StablePair | null
-  otherCurrency?: Currency | null
-  id: string
-  showCommonBases?: boolean
-  commonBasesType?: string
-  showSearchInput?: boolean
-  zapStyle?: ZapStyle
-  beforeButton?: React.ReactNode
-  disabled?: boolean
-  error?: boolean
-  showBUSD?: boolean
-  tokensToShow?: Token[]
+  value: string;
+  onUserInput: (value: string) => void;
+  onInputBlur?: () => void;
+  onPercentInput?: (percent: number) => void;
+  onMax?: () => void;
+  showQuickInputButton?: boolean;
+  showMaxButton: boolean;
+  maxAmount?: CurrencyAmount<Currency>;
+  lpPercent?: string;
+  label?: string;
+  onCurrencySelect?: (currency: Currency) => void;
+  currency?: Currency | null;
+  disableCurrencySelect?: boolean;
+  hideBalance?: boolean;
+  pair?: Pair | StablePair | null;
+  otherCurrency?: Currency | null;
+  id: string;
+  showCommonBases?: boolean;
+  commonBasesType?: string;
+  showSearchInput?: boolean;
+  zapStyle?: ZapStyle;
+  beforeButton?: React.ReactNode;
+  disabled?: boolean;
+  error?: boolean;
+  showBUSD?: boolean;
+  tokensToShow?: Token[];
 }
 export default function CurrencyInputPanel({
   value,
@@ -141,17 +145,24 @@ export default function CurrencyInputPanel({
   showBUSD,
   tokensToShow,
 }: CurrencyInputPanelProps) {
-  const { address: account } = useAccount()
-  const selectedCurrencyBalance = useCurrencyBalance(account ?? undefined, currency ?? undefined)
-  const { t } = useTranslation()
+  const { address: account } = useAccount();
+  const selectedCurrencyBalance = useCurrencyBalance(
+    account ?? undefined,
+    currency ?? undefined
+  );
+  const { t } = useTranslation();
 
-  const token = pair ? pair.liquidityToken : currency?.isToken ? currency : null
-  const tokenAddress = token ? isAddress(token.address) : null
+  const token = pair
+    ? pair.liquidityToken
+    : currency?.isToken
+    ? currency
+    : null;
+  const tokenAddress = token ? isAddress(token.address) : null;
 
   const amountInDollar = useBUSDCurrencyAmount(
     showBUSD ? currency : undefined,
-    Number.isFinite(+value) ? +value : undefined,
-  )
+    Number.isFinite(+value) ? +value : undefined
+  );
 
   const [onPresentCurrencyModal] = useModal(
     <CurrencySearchModal
@@ -162,36 +173,37 @@ export default function CurrencyInputPanel({
       commonBasesType={commonBasesType}
       showSearchInput={showSearchInput}
       tokensToShow={tokensToShow}
-    />,
-  )
+    />
+  );
 
   const percentAmount = useMemo(
     () => ({
-      25: maxAmount ? maxAmount.multiply(new Percent(25, 100)).toExact() : undefined,
-      50: maxAmount ? maxAmount.multiply(new Percent(50, 100)).toExact() : undefined,
-      75: maxAmount ? maxAmount.multiply(new Percent(75, 100)).toExact() : undefined,
+      25: maxAmount
+        ? maxAmount.multiply(new Percent(25, 100)).toExact()
+        : undefined,
+      50: maxAmount
+        ? maxAmount.multiply(new Percent(50, 100)).toExact()
+        : undefined,
+      75: maxAmount
+        ? maxAmount.multiply(new Percent(75, 100)).toExact()
+        : undefined,
     }),
-    [maxAmount],
-  )
+    [maxAmount]
+  );
 
-  const [currentClickedPercent, setCurrentClickedPercent] = useState('')
+  const [currentClickedPercent, setCurrentClickedPercent] = useState("");
 
-  const isAtPercentMax = (maxAmount && value === maxAmount.toExact()) || (lpPercent && lpPercent === '100')
-  const translatedLabel = label || t('Input')
+  const isAtPercentMax =
+    (maxAmount && value === maxAmount.toExact()) ||
+    (lpPercent && lpPercent === "100");
+  const translatedLabel = label || t("Input");
 
   return (
     <Container position="relative" id={id}>
       <Flex alignItems="center" justifyContent="space-between">
         <LabelRow>
           <div>
-            <Text fontSize="14px">{translatedLabel}</Text>
-            {/* {account && (
-              <Text onClick={onMax} fontSize="14px" style={{ display: 'inline', cursor: 'pointer' }}>
-                {!hideBalance && !!currency && selectedCurrencyBalance
-                  ? t('Balance: %amount%', { amount: selectedCurrencyBalance?.toSignificant(6) ?? '' })
-                  : ' -'}
-              </Text>
-            )} */}
+            <Text fontSize="18px">{translatedLabel}</Text>
           </div>
         </LabelRow>
       </Flex>
@@ -207,10 +219,10 @@ export default function CurrencyInputPanel({
                 className="token-amount-input"
                 value={value}
                 onBlur={onInputBlur}
-                width="auto"
+                width="100%"
                 onUserInput={(val) => {
-                  onUserInput(val)
-                  setCurrentClickedPercent('')
+                  onUserInput(val);
+                  setCurrentClickedPercent("");
                 }}
               />
             </LabelRow>
@@ -219,19 +231,29 @@ export default function CurrencyInputPanel({
 
         <CurrencySelectButton
           zapStyle={zapStyle}
-          className="open-currency-select-button"
+          className="open-currency-select-button my-bg-primary"
           selected={!!currency}
           onClick={() => {
             if (!disableCurrencySelect) {
-              onPresentCurrencyModal()
+              onPresentCurrencyModal();
             }
           }}
         >
-          <Flex alignItems="center" justifyContent="space-between">
+          <Flex style={{gap: "20px"}} alignItems="center" justifyContent="space-between">
             {pair ? (
-              <DoubleCurrencyLogo currency0={pair.token0} currency1={pair.token1} size={16} margin />
+              <DoubleCurrencyLogo
+                currency0={pair.token0}
+                currency1={pair.token1}
+                size={16}
+                style={{ marginRight: "8px" }}
+
+              />
             ) : currency ? (
-              <CurrencyLogo currency={currency} size="24px" style={{ marginRight: '8px' }} />
+              <CurrencyLogo
+                currency={currency}
+                size="24px"
+                style={{ marginRight: "8px" }}
+              />
             ) : null}
             {pair ? (
               <Text id="pair" bold>
@@ -242,9 +264,9 @@ export default function CurrencyInputPanel({
                 {(currency && currency.symbol && currency.symbol.length > 10
                   ? `${currency.symbol.slice(0, 4)}...${currency.symbol.slice(
                       currency.symbol.length - 5,
-                      currency.symbol.length,
+                      currency.symbol.length
                     )}`
-                  : currency?.symbol) || t('Select a currency')}
+                  : currency?.symbol) || t("Select a currency")}
               </Text>
             )}
             {!disableCurrencySelect && <ChevronDownIcon />}
@@ -253,24 +275,31 @@ export default function CurrencyInputPanel({
       </Flex>
       <InputPanel>
         {account && (
-          <Flex alignItems="center" justifyContent="space-between" p="0 1rem 0.75rem 0.75rem">
+          <Flex
+            alignItems="center"
+            justifyContent="space-between"
+            p="0 1rem 0.75rem 0.75rem"
+          >
             <Text
               onClick={!disabled && onMax}
               color="textSubtle"
               fontSize="14px"
-              style={{ display: 'inline', cursor: 'pointer' }}
+              style={{ display: "inline", cursor: "pointer" }}
             >
               {!hideBalance && !!currency
-                ? t('Balance: %balance%', { balance: selectedCurrencyBalance?.toSignificant(6) ?? t('Loading') })
-                : ' -'}
+                ? t("Balance: %balance%", {
+                    balance:
+                      selectedCurrencyBalance?.toSignificant(6) ?? t("Loading"),
+                  })
+                : " -"}
             </Text>
             {token && tokenAddress ? (
-              <Flex style={{ gap: '4px' }} ml="4px" alignItems="center">
+              <Flex style={{ gap: "4px" }} ml="4px" alignItems="center">
                 <CopyButton
                   width="16px"
                   buttonColor="textSubtle"
                   text={tokenAddress}
-                  tooltipMessage={t('Token address copied')}
+                  tooltipMessage={t("Token address copied")}
                 />
                 <AddToWalletButton
                   variant="text"
@@ -280,72 +309,78 @@ export default function CurrencyInputPanel({
                   tokenAddress={tokenAddress}
                   tokenSymbol={token.symbol}
                   tokenDecimals={token.decimals}
-                  tokenLogo={token instanceof WrappedTokenInfo ? token.logoURI : undefined}
+                  tokenLogo={
+                    token instanceof WrappedTokenInfo
+                      ? token.logoURI
+                      : undefined
+                  }
                 />
               </Flex>
             ) : (
               <div />
             )}
-            {/* {!!currency && showBUSD && Number.isFinite(amountInDollar) && (
-            <Flex justifyContent="flex-end">
-              <Flex maxWidth="200px">
-                <Text fontSize="12px" color="textSubtle">
-                  ~{formatNumber(amountInDollar)} USD
-                </Text>
-              </Flex>
-            </Flex>
-          )} */}
           </Flex>
         )}
         <InputRow selected={disableCurrencySelect}>
-            {account && currency && selectedCurrencyBalance?.greaterThan(0) && !disabled && label !== 'To' && (
+          {account &&
+            currency &&
+            selectedCurrencyBalance?.greaterThan(0) &&
+            !disabled &&
+            label !== "To" && (
               <Flex alignItems="right" justifyContent="right">
                 {maxAmount?.greaterThan(0) &&
                   showQuickInputButton &&
                   onPercentInput &&
                   [25, 50, 75].map((percent) => {
-                    const isAtClickedPercent = currentClickedPercent === percent.toString()
+                    const isAtClickedPercent =
+                      currentClickedPercent === percent.toString();
                     const isAtCurrentPercent =
-                      (maxAmount && value !== '0' && value === percentAmount[percent]) ||
-                      (lpPercent && lpPercent === percent.toString())
+                      (maxAmount &&
+                        value !== "0" &&
+                        value === percentAmount[percent]) ||
+                      (lpPercent && lpPercent === percent.toString());
 
                     return (
                       <Button
                         key={`btn_quickCurrency${percent}`}
                         onClick={() => {
-                          onPercentInput(percent)
-                          setCurrentClickedPercent(percent.toString())
+                          onPercentInput(percent);
+                          setCurrentClickedPercent(percent.toString());
                         }}
                         scale="xs"
                         mr="5px"
-                        variant={isAtClickedPercent || isAtCurrentPercent ? 'primary' : 'secondary'}
-                        style={{ textTransform: 'uppercase' }}
+                        variant={
+                          isAtClickedPercent || isAtCurrentPercent
+                            ? "primary"
+                            : "secondary"
+                        }
+                        style={{ textTransform: "uppercase" }}
                       >
                         {percent}%
                       </Button>
-                    )
+                    );
                   })}
                 {maxAmount?.greaterThan(0) && showMaxButton && (
                   <Button
                     onClick={(e) => {
-                      e.stopPropagation()
-                      e.preventDefault()
-                      onMax?.()
-                      setCurrentClickedPercent('MAX')
+                      e.stopPropagation();
+                      e.preventDefault();
+                      onMax?.();
+                      setCurrentClickedPercent("MAX");
                     }}
                     scale="xs"
-                    variant={isAtPercentMax ? 'primary' : 'secondary'}
-                    style={{ textTransform: 'uppercase' }}
+                    variant={isAtPercentMax ? "primary" : "secondary"}
+                    style={{ textTransform: "uppercase" }}
                   >
-                    {t('Max')}
+                    {t("Max")}
                   </Button>
                 )}
               </Flex>
             )}
-          </InputRow>
-        <div style={{ paddingBottom: '10px' }}></div>
+        </InputRow>
+        <div style={{ paddingBottom: "10px" }}></div>
         {disabled && <Overlay />}
       </InputPanel>
     </Container>
-  )
+  );
 }

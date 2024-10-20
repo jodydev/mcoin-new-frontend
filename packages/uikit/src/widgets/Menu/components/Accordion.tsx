@@ -91,9 +91,8 @@ const Accordion: React.FC<Props> = ({
   }
 
   return (
-    <Container>
+    <div className="flex-row w-full ms-3">
       <MenuEntry onClick={handleClick} className={className} isActive={isActive}>
-        {(icon && createElement(icon as any, { color: isActive ? "primaryBright" : "textSubtle", marginRight: mRight, width: iconWidth }))}
         {hasSubItems ? <LinkLabel isActive={isActive}>{label}</LinkLabel>
          : 
          <MenuItem href={href} variant="default" isActive={isActive} statusColor={statusColor} isDisabled={isDisabled}>
@@ -114,7 +113,7 @@ const Accordion: React.FC<Props> = ({
       >
         {children}
       </AccordionContent>
-    </Container>
+    </div>
   );
 };
 

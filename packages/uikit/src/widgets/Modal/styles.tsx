@@ -26,9 +26,13 @@ export const ModalTitle = styled(Flex)`
 `;
 
 export const ModalBody = styled(Flex)`
+  border: none !important;
+  border-radius: 10px !important;
+  min-width: 500px !important;
+  background-color: #131118 !important;
   flex-direction: column;
   overflow-y: auto;
-  overflow-x: hidden;
+  min-height: 20vh;
   max-height: calc(90vh - ${mobileFooterHeight}px);
   ${({ theme }) => theme.mediaQueries.md} {
     display: flex;
@@ -40,9 +44,11 @@ export const ModalCloseButton: React.FC<React.PropsWithChildren<{ onDismiss: Mod
   onDismiss,
 }) => {
   return (
-    <IconButton variant="text" onClick={onDismiss} aria-label="Close the dialog">
-      <CloseIcon color="primary" />
-    </IconButton>
+    <>
+      <IconButton variant="text" onClick={onDismiss} aria-label="Close the dialog">
+        <CloseIcon color="primary" />
+      </IconButton>
+    </>
   );
 };
 

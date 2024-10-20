@@ -19,18 +19,44 @@ const ButtonWrapper = styled.div`
 `
 
 const BaseWrapper = styled.div<{ disable?: boolean }>`
-  // border: 1px solid ${({ theme, disable }) => (disable ? 'transparent' : theme.colors.dropdown)};
-  border-radius: 10px;
+  position: relative;
   display: flex;
-  padding: 6px;
   align-items: center;
+  padding: 6px;
+  border-radius: 25px;
+  background-color: #1c1924;
+  padding: 15px;
+  margin: 5px;
+  
+  ::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    padding: 2px;
+      border-radius: 25px;
+    background: ${({ disable }) => !disable && 'linear-gradient(90deg, rgba(150,123,248,1) 0%, rgba(134,236,233,1) 100%)'};
+    -webkit-mask: 
+      linear-gradient(#fff 0 0) content-box, 
+      linear-gradient(#fff 0 0);
+    mask: 
+      linear-gradient(#fff 0 0) content-box, 
+      linear-gradient(#fff 0 0);
+    -webkit-mask-composite: destination-out;
+    mask-composite: exclude;
+  }
+
   :hover {
     cursor: ${({ disable }) => !disable && 'pointer'};
     background-color: ${({ theme, disable }) => !disable && theme.colors.background};
   }
+
   background-color: ${({ theme, disable }) => disable && theme.colors.dropdown};
   opacity: ${({ disable }) => disable && '0.4'};
-`
+`;
+
 
 const RowWrapper = styled.div`
   white-space: nowrap;
@@ -67,7 +93,6 @@ export default function CommonBases({
   return (
     <AutoColumn gap="md">
       <AutoRow>
-        <Text fontSize="14px">{pinTokenDescText}</Text>
         {commonBasesType === CommonBasesType.LIQUIDITY && (
           <QuestionHelper text={t('These tokens are commonly paired with other tokens.')} ml="4px" />
         )}

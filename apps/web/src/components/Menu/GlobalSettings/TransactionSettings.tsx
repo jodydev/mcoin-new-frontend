@@ -81,14 +81,7 @@ const SlippageTabs = () => {
     <Flex flexDirection="column">
       <Flex flexDirection="column" mb="24px">
         <Flex mb="12px">
-          <Text>{t('Slippage Tolerance')}</Text>
-          <QuestionHelper
-            text={t(
-              'Setting a high slippage tolerance can help transactions succeed, but you may not get such a good price. Use with caution.',
-            )}
-            placement="top-start"
-            ml="4px"
-          />
+          <p className='text-white fw-semibold'>{t('Slippage Tolerance')}</p>
         </Flex>
         <Flex flexWrap="wrap">
           <Button

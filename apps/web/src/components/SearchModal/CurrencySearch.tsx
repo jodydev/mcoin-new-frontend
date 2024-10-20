@@ -241,7 +241,7 @@ function CurrencySearch({
     <>
       <AutoColumn gap="16px">
         {showSearchInput && (
-          <Row>
+            <Row>
             <Input
               id="token-search-input"
               placeholder={t('Search name or paste address')}
@@ -252,7 +252,7 @@ function CurrencySearch({
               onChange={handleInput}
               onKeyDown={handleEnter}
             />
-          </Row>
+            </Row>
         )}
         {showCommonBases && (
           <CommonBases

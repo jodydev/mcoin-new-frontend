@@ -22,7 +22,7 @@ const Container1 = styled.div`
 
 const Container = styled.div`
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   overflow-y: auto;
   overflow-x: hidden;
   height: 100%;
@@ -32,7 +32,7 @@ const PanelBody: React.FC<Props> = ({ isPushed, pushNav, isMobile, links, active
   // const location = useLocation();
   
   return (
-    <Container>
+    <div className="d-flex flex-row w-100">
       {links.map(({ label, items: menuItems = [], href, icon, disabled }) => {
         // const calloutClass = entry.calloutClass ? entry.calloutClass : undefined;
         const statusColor = menuItems?.find((menuItem) => menuItem.status !== undefined)?.status?.color;
@@ -69,7 +69,7 @@ const PanelBody: React.FC<Props> = ({ isPushed, pushNav, isMobile, links, active
           </Accordion>
         );
       })}
-    </Container>
+    </div>
   );
 };
 

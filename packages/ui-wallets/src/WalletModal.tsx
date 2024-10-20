@@ -1,6 +1,6 @@
-import { usePreloadImages } from '@pancakeswap/hooks'
-import { useTranslation } from '@pancakeswap/localization'
-import { AtomBox } from '@pancakeswap/ui/components/AtomBox'
+import { usePreloadImages } from "@pancakeswap/hooks";
+import { useTranslation } from "@pancakeswap/localization";
+import { AtomBox } from "@pancakeswap/ui/components/AtomBox";
 import {
   Button,
   Heading,
@@ -15,66 +15,70 @@ import {
   TabMenu,
   Text,
   WarningIcon,
-} from '@pancakeswap/uikit'
-import { atom, useAtom } from 'jotai'
-import { lazy, PropsWithChildren, Suspense, useMemo, useState } from 'react'
-import { isMobile } from 'react-device-detect'
-import { StepIntro } from './components/Intro'
+} from "@pancakeswap/uikit";
+import { atom, useAtom } from "jotai";
+import { lazy, PropsWithChildren, Suspense, useMemo, useState } from "react";
+import { isMobile } from "react-device-detect";
+import { StepIntro } from "./components/Intro";
 import {
   desktopWalletSelectionClass,
   modalWrapperClass,
   walletIconClass,
   promotedGradientClass,
   walletSelectWrapperClass,
-} from './WalletModal.css'
+} from "./WalletModal.css";
 
-const Qrcode = lazy(() => import('./components/QRCode'))
+const Qrcode = lazy(() => import("./components/QRCode"));
 
-type LinkOfTextAndLink = string | { text: string; url: string }
+type LinkOfTextAndLink = string | { text: string; url: string };
 
 type DeviceLink = {
-  desktop?: LinkOfTextAndLink
-  mobile?: LinkOfTextAndLink
-}
+  desktop?: LinkOfTextAndLink;
+  mobile?: LinkOfTextAndLink;
+};
 
-type LinkOfDevice = string | DeviceLink
+type LinkOfDevice = string | DeviceLink;
 
 export type WalletConfigV2<T = unknown> = {
-  id: string
-  title: string
-  icon: string | React.FC<React.PropsWithChildren<SvgProps>>
-  connectorId: T
-  deepLink?: string
-  installed?: boolean
-  guide?: LinkOfDevice
-  downloadLink?: LinkOfDevice
-  mobileOnly?: boolean
-  qrCode?: () => Promise<string>
-}
+  id: string;
+  title: string;
+  icon: string | React.FC<React.PropsWithChildren<SvgProps>>;
+  connectorId: T;
+  deepLink?: string;
+  installed?: boolean;
+  guide?: LinkOfDevice;
+  downloadLink?: LinkOfDevice;
+  mobileOnly?: boolean;
+  qrCode?: () => Promise<string>;
+};
 
 interface WalletModalV2Props<T = unknown> extends ModalV2Props {
-  wallets: WalletConfigV2<T>[]
-  login: (connectorId: T) => Promise<any>
-  docLink: string
-  docText: string
+  wallets: WalletConfigV2<T>[];
+  login: (connectorId: T) => Promise<any>;
+  docLink: string;
+  docText: string;
 }
 
 export class WalletConnectorNotFoundError extends Error {}
 
 export class WalletSwitchChainError extends Error {}
 
-const errorAtom = atom<string>('')
+const errorAtom = atom<string>("");
 
-const selectedWalletAtom = atom<WalletConfigV2<unknown> | null>(null)
+const selectedWalletAtom = atom<WalletConfigV2<unknown> | null>(null);
 
 export function useSelectedWallet<T>() {
   // @ts-ignore
-  return useAtom<WalletConfigV2<T> | null>(selectedWalletAtom)
+  return useAtom<WalletConfigV2<T> | null>(selectedWalletAtom);
 }
 
-const TabContainer = ({ children, docLink, docText }: PropsWithChildren<{ docLink: string; docText: string }>) => {
-  const [index, setIndex] = useState(0)
-  const { t } = useTranslation()
+const TabContainer = ({
+  children,
+  docLink,
+  docText,
+}: PropsWithChildren<{ docLink: string; docText: string }>) => {
+  const [index, setIndex] = useState(0);
+  const { t } = useTranslation();
 
   return (
     <AtomBox position="relative" zIndex="modal" className={modalWrapperClass}>
@@ -90,8 +94,8 @@ const TabContainer = ({ children, docLink, docText }: PropsWithChildren<{ docLin
         // background="gradientCardHeader"
         borderRadius="card"
         borderBottomRadius={{
-          xs: '0',
-          md: 'card',
+          xs: "0",
+          md: "card",
         }}
         zIndex="modal"
         width="full"
@@ -101,31 +105,33 @@ const TabContainer = ({ children, docLink, docText }: PropsWithChildren<{ docLin
         {/* {index === 1 && <StepIntro docLink={docLink} docText={docText} />} */}
       </AtomBox>
     </AtomBox>
-  )
-}
+  );
+};
 
-const MOBILE_DEFAULT_DISPLAY_COUNT = 6
+const MOBILE_DEFAULT_DISPLAY_COUNT = 6;
 
 function MobileModal<T>({
   wallets,
   connectWallet,
   docLink,
   docText,
-}: Pick<WalletModalV2Props<T>, 'wallets' | 'docLink' | 'docText'> & {
-  connectWallet: (wallet: WalletConfigV2<T>) => void
+}: Pick<WalletModalV2Props<T>, "wallets" | "docLink" | "docText"> & {
+  connectWallet: (wallet: WalletConfigV2<T>) => void;
 }) {
-  const { t } = useTranslation()
+  const { t } = useTranslation();
 
-  const [selected] = useSelectedWallet()
-  const [error] = useAtom(errorAtom)
+  const [selected] = useSelectedWallet();
+  const [error] = useAtom(errorAtom);
 
-  const installedWallets: WalletConfigV2<T>[] = wallets.filter((w) => w.installed)
+  const installedWallets: WalletConfigV2<T>[] = wallets.filter(
+    (w) => w.installed
+  );
   const walletsToShow: WalletConfigV2<T>[] = wallets.filter((w) => {
     if (installedWallets.length) {
-      return w.installed
+      return w.installed;
     }
-    return w.installed !== false || w.deepLink
-  })
+    return w.installed !== false || w.deepLink;
+  });
 
   return (
     <AtomBox width="full" py="32px">
@@ -134,34 +140,36 @@ function MobileModal<T>({
           display="flex"
           flexDirection="column"
           alignItems="center"
-          style={{ gap: '24px' }}
+          style={{ gap: "24px" }}
           textAlign="center"
           p="24px"
         >
-          {selected && typeof selected.icon === 'string' && <Image src={selected.icon} width={108} height={108} />}
-          <div style={{ maxWidth: '246px' }}>
+          {selected && typeof selected.icon === "string" && (
+            <Image src={selected.icon} width={108} height={108} />
+          )}
+          <div style={{ maxWidth: "246px" }}>
             <ErrorMessage message={error} />
           </div>
         </AtomBox>
       ) : (
         <AtomBox px="48px">
           <Heading color="primary" as="h4" pb="24px">
-            {t('Connect Wallet')}
+            {t("Connect Wallet")}
           </Heading>
         </AtomBox>
       )}
-      <AtomBox flex={1} py="16px" style={{ maxHeight: '230px' }} overflow="auto">
+      <div className="w-100 h-100 bg-success ">
         <WalletSelect
           displayCount={MOBILE_DEFAULT_DISPLAY_COUNT}
           wallets={walletsToShow}
           onClick={(wallet) => {
-            connectWallet(wallet)
+            connectWallet(wallet);
             if (wallet.deepLink && wallet.installed === false) {
-              window.open(wallet.deepLink)
+              window.open(wallet.deepLink);
             }
           }}
         />
-      </AtomBox>
+      </div>
       {/* <AtomBox p="24px" borderTop="1">
         <AtomBox>
           <Text textAlign="center" color="textSubtle" as="p" mb="24px">
@@ -173,7 +181,7 @@ function MobileModal<T>({
         </Button>
       </AtomBox> */}
     </AtomBox>
-  )
+  );
 }
 
 function WalletSelect<T>({
@@ -181,65 +189,67 @@ function WalletSelect<T>({
   onClick,
   displayCount = 6,
 }: {
-  wallets: WalletConfigV2<T>[]
-  onClick: (wallet: WalletConfigV2<T>) => void
-  displayCount?: number
+  wallets: WalletConfigV2<T>[];
+  onClick: (wallet: WalletConfigV2<T>) => void;
+  displayCount?: number;
 }) {
-  const { t } = useTranslation()
-  const [showMore, setShowMore] = useState(false)
-  const walletDisplayCount = wallets.length > displayCount ? displayCount - 1 : displayCount
-  const walletsToShow = showMore ? wallets : wallets.slice(0, walletDisplayCount)
-  const [selected] = useSelectedWallet()
+  const { t } = useTranslation();
+  const [showMore, setShowMore] = useState(false);
+  const walletDisplayCount =
+    wallets.length > displayCount ? displayCount - 1 : displayCount;
+  const walletsToShow = showMore
+    ? wallets
+    : wallets.slice(0, walletDisplayCount);
+  const [selected] = useSelectedWallet();
   return (
-    <AtomBox
-      display="grid"
-      // overflowY="auto"
-      // overflowX="hidden"
-      px={{ xs: '16px', sm: '48px' }}
-      pb="12px"
+    <div
+      style={{
+        flex: 1,
+        flexDirection: "column",
+      }}
       className={walletSelectWrapperClass}
     >
       {wallets.map((wallet) => {
-        const isImage = typeof wallet.icon === 'string'
-        const Icon = wallet.icon
+        const isImage = typeof wallet.icon === "string";
+        const Icon = wallet.icon;
 
         return (
-          <Button
-            key={wallet.id}
-            variant="text"
-            height="auto"
-            as={AtomBox}
-            display="flex"
-            alignItems="center"
-            style={{ justifyContent: 'flex-start', letterSpacing: 'normal', padding: '0' }}
-            flexDirection="column"
-            onClick={() => onClick(wallet)}
-          >
-            <AtomBox className={wallet.installed && promotedGradientClass} p="2px" borderRadius="12px" mb="4px">
-              <AtomBox
-                bgc="dropdown"
-                display="flex"
-                position="relative"
-                justifyContent="center"
-                alignItems="center"
-                className={walletIconClass}
-                style={{ borderRadius: '13px' }}
-              >
+          <div className="w-100 h-100 d-flex flex-row align-items-center">
+            <div
+              key={wallet.id}
+              className="d-flex flex-row align-items-center justify-content-between w-100 rounded-3 my-bg-primary px-3 my-2 mx-4"
+              onClick={() => onClick(wallet)}
+              style={{ cursor: "pointer", padding: "10px 0" }}
+            >
+              <span className="text-left text-white fs-5 fw-semibold">
+                {wallet.title}
+              </span>
+              <div className="position-relative">
                 {isImage ? (
-                  <Image src={Icon as string} width={50} height={50} />
+                  <img
+                    src={Icon as string}
+                    alt={wallet.title}
+                    width={50}
+                    height={50}
+                  />
                 ) : (
                   <Icon width={24} height={24} color="textSubtle" />
                 )}
                 {wallet.id === selected?.id && (
-                  <AtomBox position="absolute" inset="0" bgc="secondary" opacity="0.5" borderRadius="12px" />
+                  <div
+                    className="position-absolute w-100 h-100"
+                    style={{
+                      top: 0,
+                      left: 0,
+                      backgroundColor: "rgba(0, 0, 0, 0.5)",
+                      borderRadius: "12px",
+                    }}
+                  />
                 )}
-              </AtomBox>
-            </AtomBox>
-            <Text fontSize="12px" textAlign="center">
-              {wallet.title}
-            </Text>
-          </Button>
-        )
+              </div>
+            </div>
+          </div>
+        );
       })}
       {/* {!showMore && wallets.length > walletDisplayCount && (
         <AtomBox display="flex" justifyContent="center" alignItems="center" flexDirection="column">
@@ -259,33 +269,41 @@ function WalletSelect<T>({
           </Button>
         </AtomBox>
       )} */}
-    </AtomBox>
-  )
+    </div>
+  );
 }
 
-export const walletLocalStorageKey = 'wallet'
+export const walletLocalStorageKey = "wallet";
 
-const lastUsedWalletNameAtom = atom<string>('')
+const lastUsedWalletNameAtom = atom<string>("");
 
 lastUsedWalletNameAtom.onMount = (set) => {
-  const preferred = localStorage?.getItem(walletLocalStorageKey)
+  const preferred = localStorage?.getItem(walletLocalStorageKey);
   if (preferred) {
-    set(preferred)
+    set(preferred);
   }
-}
+};
 
-function sortWallets<T>(wallets: WalletConfigV2<T>[], lastUsedWalletName: string | null) {
+function sortWallets<T>(
+  wallets: WalletConfigV2<T>[],
+  lastUsedWalletName: string | null
+) {
   const sorted = [...wallets].sort((a, b) => {
-    if (a.installed === b.installed) return 0
-    return a.installed === true ? -1 : 1
-  })
+    if (a.installed === b.installed) return 0;
+    return a.installed === true ? -1 : 1;
+  });
 
   if (!lastUsedWalletName) {
-    return sorted
+    return sorted;
   }
-  const foundLastUsedWallet = wallets.find((w) => w.title === lastUsedWalletName)
-  if (!foundLastUsedWallet) return sorted
-  return [foundLastUsedWallet, ...sorted.filter((w) => w.id !== foundLastUsedWallet.id)]
+  const foundLastUsedWallet = wallets.find(
+    (w) => w.title === lastUsedWalletName
+  );
+  if (!foundLastUsedWallet) return sorted;
+  return [
+    foundLastUsedWallet,
+    ...sorted.filter((w) => w.id !== foundLastUsedWallet.id),
+  ];
 }
 
 function DesktopModal<T>({
@@ -293,21 +311,24 @@ function DesktopModal<T>({
   connectWallet,
   docLink,
   docText,
-}: Pick<WalletModalV2Props<T>, 'wallets' | 'docLink' | 'docText'> & {
-  connectWallet: (wallet: WalletConfigV2<T>) => void
+}: Pick<WalletModalV2Props<T>, "wallets" | "docLink" | "docText"> & {
+  connectWallet: (wallet: WalletConfigV2<T>) => void;
 }) {
   const wallets: WalletConfigV2<T>[] = wallets_.filter((w) => {
-    return w.installed !== false || (!w.installed && (w.guide || w.downloadLink || w.qrCode))
-  })
+    return (
+      w.installed !== false ||
+      (!w.installed && (w.guide || w.downloadLink || w.qrCode))
+    );
+  });
 
-  const [selected] = useSelectedWallet<T>()
-  const [error] = useAtom(errorAtom)
-  const [qrCode, setQrCode] = useState<string | undefined>(undefined)
-  const { t } = useTranslation()
+  const [selected] = useSelectedWallet<T>();
+  const [error] = useAtom(errorAtom);
+  const [qrCode, setQrCode] = useState<string | undefined>(undefined);
+  const { t } = useTranslation();
 
   const connectToWallet = (wallet: WalletConfigV2<T>) => {
-    connectWallet(wallet)
-  }
+    connectWallet(wallet);
+  };
 
   return (
     <>
@@ -321,29 +342,43 @@ function DesktopModal<T>({
         margin="auto"
         className={desktopWalletSelectionClass}
       >
-        <AtomBox px="48px">
-          <Heading color="primary" as="h4" pb="24px">
-            {t('Connect Wallet')}
-          </Heading>
+        <div className="d-flex justify-content-center align-items-center mb-4">
+          <p className="text-white fs-5 fw-semibold">{t("Connect a Wallet")}</p>
           {/* <Text color="textSubtle" small pt="24px" pb="32px">
             {t(
               'Start by connecting with one of the wallets below. Be sure to store your private keys or seed phrase securely. Never share them with anyone.',
             )}
           </Text> */}
-        </AtomBox>
+        </div>
         <WalletSelect
           wallets={wallets}
           onClick={(w) => {
-            connectToWallet(w)
-            setQrCode(undefined)
+            connectToWallet(w);
+            setQrCode(undefined);
             if (w.qrCode) {
               w.qrCode().then((uri) => {
-                setQrCode(uri)
-              })
+                setQrCode(uri);
+              });
             }
           }}
         />
+
+        {/* //todo AGGIUNGERE QUI LINK CORRETTO */}
+        <div className="ms-4 my-3">
+          <p className="text-white">
+            New to M20 Chain?{" "}
+            <a
+              className="text-primary text-decoration-underline"
+              href="https://m20chain.com"
+              target="_blank"
+              rel="noreferrer"
+            >
+              Learn more about wallets
+            </a>
+          </p>
+        </div>
       </AtomBox>
+
       {/* <AtomBox
         flex={1}
         mx="24px"
@@ -374,147 +409,211 @@ function DesktopModal<T>({
         </AtomBox>
       </AtomBox> */}
     </>
-  )
+  );
 }
 
 export function WalletModalV2<T = unknown>(props: WalletModalV2Props<T>) {
-  const { wallets: _wallets, login, docLink, docText, ...rest } = props
+  const { wallets: _wallets, login, docLink, docText, ...rest } = props;
 
-  const [lastUsedWalletName] = useAtom(lastUsedWalletNameAtom)
+  const [lastUsedWalletName] = useAtom(lastUsedWalletNameAtom);
 
-  const wallets = useMemo(() => sortWallets(_wallets, lastUsedWalletName), [_wallets, lastUsedWalletName])
-  const [, setSelected] = useSelectedWallet<T>()
-  const [, setError] = useAtom(errorAtom)
-  const { t } = useTranslation()
+  const wallets = useMemo(
+    () => sortWallets(_wallets, lastUsedWalletName),
+    [_wallets, lastUsedWalletName]
+  );
+  const [, setSelected] = useSelectedWallet<T>();
+  const [, setError] = useAtom(errorAtom);
+  const { t } = useTranslation();
 
   const imageSources = useMemo(
     () =>
       wallets
         .map((w) => w.icon)
-        .filter((icon) => typeof icon === 'string')
-        .concat('https://cdn.pancakeswap.com/wallets/wallet_intro.png') as string[],
-    [wallets],
-  )
+        .filter((icon) => typeof icon === "string")
+        .concat(
+          "https://cdn.pancakeswap.com/wallets/wallet_intro.png"
+        ) as string[],
+    [wallets]
+  );
 
-  usePreloadImages(imageSources.slice(0, MOBILE_DEFAULT_DISPLAY_COUNT))
+  usePreloadImages(imageSources.slice(0, MOBILE_DEFAULT_DISPLAY_COUNT));
 
   const connectWallet = (wallet: WalletConfigV2<T>) => {
-    setSelected(wallet)
-    setError('')
+    setSelected(wallet);
+    setError("");
     if (wallet.installed !== false) {
       login(wallet.connectorId)
         .then((v) => {
           if (v) {
-            localStorage.setItem(walletLocalStorageKey, wallet.title)
+            localStorage.setItem(walletLocalStorageKey, wallet.title);
           }
         })
         .catch((err) => {
           if (err instanceof WalletConnectorNotFoundError) {
-            setError(t('no provider found'))
+            setError(t("no provider found"));
           } else if (err instanceof WalletSwitchChainError) {
-            setError(err.message)
+            setError(err.message);
           } else {
-            setError(t('Error connecting, please authorize wallet to access.'))
+            setError(t("Error connecting, please authorize wallet to access."));
           }
-        })
+        });
     }
-  }
+  };
 
   return (
     <ModalV2 closeOnOverlayClick {...rest}>
-      <ModalWrapper onDismiss={props.onDismiss} style={{ overflow: 'visible', border: 'none' }}>
-        <AtomBox position="relative">
-          <TabContainer docLink={docLink} docText={docText}>
+      <ModalWrapper
+        onDismiss={props.onDismiss}
+        style={{ overflow: "visible", border: "none",}}
+      >
+        <AtomBox position="relative" >
+          <TabContainer docLink={docLink} docText={docText} >
             {isMobile ? (
-              <MobileModal connectWallet={connectWallet} wallets={wallets} docLink={docLink} docText={docText} />
+              <MobileModal
+                connectWallet={connectWallet}
+                wallets={wallets}
+                docLink={docLink}
+                docText={docText}
+              />
             ) : (
-              <DesktopModal connectWallet={connectWallet} wallets={wallets} docLink={docLink} docText={docText} />
+              <DesktopModal
+                connectWallet={connectWallet}
+                wallets={wallets}
+                docLink={docLink}
+                docText={docText}
+              />
             )}
           </TabContainer>
         </AtomBox>
       </ModalWrapper>
     </ModalV2>
-  )
+  );
 }
 
 const Intro = ({ docLink, docText }: { docLink: string; docText: string }) => {
-  const { t } = useTranslation()
+  const { t } = useTranslation();
   return (
     <>
       <Heading as="h1" fontSize="20px" color="secondary">
-        {t('Haven’t got a wallet yet?')}
+        {t("Haven’t got a wallet yet?")}
       </Heading>
-      <Image src="https://cdn.pancakeswap.com/wallets/wallet_intro.png" width={198} height={178} />
-      <Button as={LinkExternal} color="backgroundAlt" variant="subtle" href={docLink}>
+      <Image
+        src="https://cdn.pancakeswap.com/wallets/wallet_intro.png"
+        width={198}
+        height={178}
+      />
+      <Button
+        as={LinkExternal}
+        color="backgroundAlt"
+        variant="subtle"
+        href={docLink}
+      >
         {docText}
       </Button>
     </>
-  )
-}
+  );
+};
 
-const NotInstalled = ({ wallet, qrCode }: { wallet: WalletConfigV2; qrCode?: string }) => {
-  const { t } = useTranslation()
+const NotInstalled = ({
+  wallet,
+  qrCode,
+}: {
+  wallet: WalletConfigV2;
+  qrCode?: string;
+}) => {
+  const { t } = useTranslation();
   return (
     <>
       <Heading as="h1" fontSize="20px" color="secondary">
-        {t('%wallet% is not installed', { wallet: wallet.title })}
+        {t("%wallet% is not installed", { wallet: wallet.title })}
       </Heading>
       {qrCode && (
         <Suspense>
-          <AtomBox overflow="hidden" borderRadius="card" style={{ width: '288px', height: '288px' }}>
-            <Qrcode url={qrCode} image={typeof wallet.icon === 'string' ? wallet.icon : undefined} />
+          <AtomBox
+            overflow="hidden"
+            borderRadius="card"
+            style={{ width: "288px", height: "288px" }}
+          >
+            <Qrcode
+              url={qrCode}
+              image={typeof wallet.icon === "string" ? wallet.icon : undefined}
+            />
           </AtomBox>
         </Suspense>
       )}
       {!qrCode && (
         <Text maxWidth="246px" m="auto">
-          {t('Please install the %wallet% browser extension to connect the %wallet% wallet.', {
-            wallet: wallet.title,
-          })}
+          {t(
+            "Please install the %wallet% browser extension to connect the %wallet% wallet.",
+            {
+              wallet: wallet.title,
+            }
+          )}
         </Text>
       )}
       {wallet.guide && (
-        <Button variant="subtle" as="a" href={getDesktopLink(wallet.guide)} external>
-          {getDesktopText(wallet.guide, t('Setup Guide'))}
+        <Button
+          variant="subtle"
+          as="a"
+          href={getDesktopLink(wallet.guide)}
+          external
+        >
+          {getDesktopText(wallet.guide, t("Setup Guide"))}
         </Button>
       )}
       {wallet.downloadLink && (
-        <Button variant="subtle" as="a" href={getDesktopLink(wallet.downloadLink)} external>
-          {getDesktopText(wallet.downloadLink, t('Install'))}
+        <Button
+          variant="subtle"
+          as="a"
+          href={getDesktopLink(wallet.downloadLink)}
+          external
+        >
+          {getDesktopText(wallet.downloadLink, t("Install"))}
         </Button>
       )}
     </>
-  )
-}
+  );
+};
 
 const ErrorMessage = ({ message }: { message: string }) => (
   <Text bold color="failure">
-    <WarningIcon width="16px" color="failure" style={{ verticalAlign: 'middle' }} /> {message}
+    <WarningIcon
+      width="16px"
+      color="failure"
+      style={{ verticalAlign: "middle" }}
+    />{" "}
+    {message}
   </Text>
-)
+);
 
-const ErrorContent = ({ onRetry, message }: { onRetry: () => void; message: string }) => {
-  const { t } = useTranslation()
+const ErrorContent = ({
+  onRetry,
+  message,
+}: {
+  onRetry: () => void;
+  message: string;
+}) => {
+  const { t } = useTranslation();
   return (
     <>
       <ErrorMessage message={message} />
       <Button variant="subtle" onClick={onRetry}>
-        {t('Retry')}
+        {t("Retry")}
       </Button>
     </>
-  )
-}
+  );
+};
 
 const getDesktopLink = (linkDevice: LinkOfDevice) =>
-  typeof linkDevice === 'string'
+  typeof linkDevice === "string"
     ? linkDevice
-    : typeof linkDevice.desktop === 'string'
+    : typeof linkDevice.desktop === "string"
     ? linkDevice.desktop
-    : linkDevice.desktop?.url
+    : linkDevice.desktop?.url;
 
 const getDesktopText = (linkDevice: LinkOfDevice, fallback: string) =>
-  typeof linkDevice === 'string'
+  typeof linkDevice === "string"
     ? fallback
-    : typeof linkDevice.desktop === 'string'
+    : typeof linkDevice.desktop === "string"
     ? fallback
-    : linkDevice.desktop?.text ?? fallback
+    : linkDevice.desktop?.text ?? fallback;

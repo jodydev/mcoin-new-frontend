@@ -103,6 +103,16 @@ export const socials = [
     icon: InstagramIcon,
     href: "https://www.instagram.com/m20chain/",
   },
+  {
+    label: "Medium",
+    icon: MediumIcon,
+    href: "https://medium.com/@CyberglowCS",
+  },
+  {
+    label: "Link Tree",
+    icon: ResourcesIcon,
+    href: "https://docs.cyberglow.finance",
+  },
   // {
   //   label: "Github",
   //   icon: GithubIcon,

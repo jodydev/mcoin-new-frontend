@@ -35,9 +35,9 @@ const ConnectWalletButton = ({ children, ...props }: ButtonProps) => {
   const wallets = useMemo(() => createWallets(chainId, connectAsync), [chainId, connectAsync])
 
   return (
-    <>
-      <Button onClick={handleClick} {...props}>
-        {children || <Trans>Connect Wallet</Trans>}
+    <div className=' w-100 h-100 d-flex align-items-center justify-center'>
+      <Button style={{borderRadius: "45px"}} onClick={handleClick} {...props}>
+        {children || <p className='text-white fw-bold fs-5'>Connect Wallet</p>}
       </Button>
       <WalletModalV2
         docText={t('Learn How to Connect')}
@@ -47,7 +47,7 @@ const ConnectWalletButton = ({ children, ...props }: ButtonProps) => {
         login={login}
         onDismiss={() => setOpen(false)}
       />
-    </>
+    </div>
   )
 }
 

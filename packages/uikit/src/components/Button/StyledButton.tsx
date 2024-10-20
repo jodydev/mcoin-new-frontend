@@ -48,16 +48,17 @@ const StyledButton = styled.button<BaseButtonProps>`
   align-items: center;
   border: 0;
   height: 60px;
-  border-radius: 8px;
-  background: linear-gradient(90.54deg, #967BF8 -5.33%, #86ECE9 130.09%);
+      padding-left: 30px;
+    padding-right: 30px;
+  border-radius: 25px;
+  background-color: red;
   // box-shadow: 0px -1px 0px 0px rgba(14, 14, 44, 0.4) inset;
   box-shadow: inset 0px 0px 30px rgba(255, 255, 255, 0.05), inset 0px 2px 2px rgba(255, 255, 255, 0.15);
   cursor: pointer;
   display: inline-flex;
   // font-family: inherit;
-  font-family: Lexend;
   font-size: 18px;
-  font-weight: 500;
+  font-weight: 600;
   font-style: normal;
   justify-content: center;
   letter-spacing: 0.03em;
@@ -66,15 +67,6 @@ const StyledButton = styled.button<BaseButtonProps>`
   outline: 0;
   transition: background-color 0.2s, opacity 0.2s;
 
-  &:hover:not(:disabled):not(.pancake-button--disabled):not(.pancake-button--disabled):not(:active) {
-    opacity: 0.65;
-  }
-
-  &:active:not(:disabled):not(.pancake-button--disabled):not(.pancake-button--disabled) {
-    opacity: 0.85;
-    transform: translateY(1px);
-    box-shadow: none;
-  }
 
   ${getDisabledStyles}
   ${variant({
