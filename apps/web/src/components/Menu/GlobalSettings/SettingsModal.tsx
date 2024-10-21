@@ -1,5 +1,5 @@
-import { useTranslation } from '@pancakeswap/localization'
-import { ChainId } from '@pancakeswap/sdk'
+import { useTranslation } from "@pancakeswap/localization";
+import { ChainId } from "@pancakeswap/sdk";
 import {
   // Box,
   Flex,
@@ -13,12 +13,12 @@ import {
   ThemeSwitcher,
   Toggle,
   Link,
-} from '@pancakeswap/uikit'
+} from "@pancakeswap/uikit";
 // import { SUPPORT_ZAP } from 'config/constants/supportChains'
-import { useActiveChainId } from 'hooks/useActiveChainId'
-import useTheme from 'hooks/useTheme'
-import { ChangeEvent, useCallback, useState } from 'react'
-import { useSwapActionHandlers } from 'state/swap/useSwapActionHandlers'
+import { useActiveChainId } from "hooks/useActiveChainId";
+import useTheme from "hooks/useTheme";
+import { ChangeEvent, useCallback, useState } from "react";
+import { useSwapActionHandlers } from "state/swap/useSwapActionHandlers";
 import {
   useAudioModeManager,
   useExpertModeManager,
@@ -27,13 +27,13 @@ import {
   useUserSingleHopOnly,
   useUserUsernameVisibility,
   useZapModeManager,
-} from 'state/user/hooks'
-import { useUserTokenRisk } from 'state/user/hooks/useUserTokenRisk'
-import { useStableSwapByDefault } from 'state/user/smartRouter'
-import styled from 'styled-components'
-import GasSettings from './GasSettings'
-import TransactionSettings from './TransactionSettings'
-import { SettingsMode } from './types'
+} from "state/user/hooks";
+import { useUserTokenRisk } from "state/user/hooks/useUserTokenRisk";
+import { useStableSwapByDefault } from "state/user/smartRouter";
+import styled from "styled-components";
+import GasSettings from "./GasSettings";
+import TransactionSettings from "./TransactionSettings";
+import { SettingsMode } from "./types";
 
 const ScrollableContainer = styled(Flex)`
   flex-direction: column;
@@ -44,46 +44,53 @@ const ScrollableContainer = styled(Flex)`
   ${({ theme }) => theme.mediaQueries.md} {
     max-height: none;
   }
-`
+`;
 
 export const withCustomOnDismiss =
   (Component) =>
-    ({
-      onDismiss,
-      customOnDismiss,
-      mode,
-      ...props
-    }: {
-      onDismiss?: () => void
-      customOnDismiss: () => void
-      mode: SettingsMode
-    }) => {
-      const handleDismiss = useCallback(() => {
-        onDismiss?.()
-        if (customOnDismiss) {
-          customOnDismiss()
-        }
-      }, [customOnDismiss, onDismiss])
+  ({
+    onDismiss,
+    customOnDismiss,
+    mode,
+    ...props
+  }: {
+    onDismiss?: () => void;
+    customOnDismiss: () => void;
+    mode: SettingsMode;
+  }) => {
+    const handleDismiss = useCallback(() => {
+      onDismiss?.();
+      if (customOnDismiss) {
+        customOnDismiss();
+      }
+    }, [customOnDismiss, onDismiss]);
 
-      return <Component {...props} mode={mode} onDismiss={handleDismiss} />
-    }
+    return <Component {...props} mode={mode} onDismiss={handleDismiss} />;
+  };
 
-const SettingsModal: React.FC<React.PropsWithChildren<InjectedModalProps>> = ({ onDismiss, mode }) => {
-  const [showConfirmExpertModal, setShowConfirmExpertModal] = useState(false)
-  const [showExpertModeAcknowledgement, setShowExpertModeAcknowledgement] = useUserExpertModeAcknowledgementShow()
-  const [expertMode, toggleExpertMode] = useExpertModeManager()
+const SettingsModal: React.FC<React.PropsWithChildren<InjectedModalProps>> = ({
+  onDismiss,
+  mode,
+}) => {
+  const [showConfirmExpertModal, setShowConfirmExpertModal] = useState(false);
+  const [showExpertModeAcknowledgement, setShowExpertModeAcknowledgement] =
+    useUserExpertModeAcknowledgementShow();
+  const [expertMode, toggleExpertMode] = useExpertModeManager();
   // const [singleHopOnly, setSingleHopOnly] = useUserSingleHopOnly()
-  const [audioPlay, toggleSetAudioMode] = useAudioModeManager()
+  const [audioPlay, toggleSetAudioMode] = useAudioModeManager();
   // const [zapMode, toggleZapMode] = useZapModeManager()
-  const [subgraphHealth, setSubgraphHealth] = useSubgraphHealthIndicatorManager()
-  const [userUsernameVisibility, setUserUsernameVisibility] = useUserUsernameVisibility()
-  const { onChangeRecipient } = useSwapActionHandlers()
-  const { chainId } = useActiveChainId()
-  const [isStableSwapByDefault, setIsStableSwapByDefault] = useStableSwapByDefault()
-  const [tokenRisk, setTokenRisk] = useUserTokenRisk()
+  const [subgraphHealth, setSubgraphHealth] =
+    useSubgraphHealthIndicatorManager();
+  const [userUsernameVisibility, setUserUsernameVisibility] =
+    useUserUsernameVisibility();
+  const { onChangeRecipient } = useSwapActionHandlers();
+  const { chainId } = useActiveChainId();
+  const [isStableSwapByDefault, setIsStableSwapByDefault] =
+    useStableSwapByDefault();
+  const [tokenRisk, setTokenRisk] = useUserTokenRisk();
 
-  const { t } = useTranslation()
-  const { isDark, setTheme } = useTheme()
+  const { t } = useTranslation();
+  const { isDark, setTheme } = useTheme();
 
   if (showConfirmExpertModal) {
     return (
@@ -93,22 +100,21 @@ const SettingsModal: React.FC<React.PropsWithChildren<InjectedModalProps>> = ({ 
         toggleExpertMode={toggleExpertMode}
         setShowExpertModeAcknowledgement={setShowExpertModeAcknowledgement}
       />
-    )
+    );
   }
-
 
   const handleExpertModeToggle = () => {
     if (expertMode || !showExpertModeAcknowledgement) {
-      onChangeRecipient(null)
-      toggleExpertMode()
+      onChangeRecipient(null);
+      toggleExpertMode();
     } else {
-      setShowConfirmExpertModal(true)
+      setShowConfirmExpertModal(true);
     }
-  }
+  };
 
   return (
     // <Modal title={t('Settings')} headerBackground="gradientCardHeader" onDismiss={onDismiss}>
-    <Modal title={t('Settings')} onDismiss={onDismiss}>
+    <Modal title={t("Settings")} onDismiss={onDismiss}>
       <ScrollableContainer>
         {/* {mode === SettingsMode.GLOBAL && (
           <>
@@ -242,9 +248,11 @@ const SettingsModal: React.FC<React.PropsWithChildren<InjectedModalProps>> = ({ 
             )} */}
           <Flex justifyContent="space-between" alignItems="center" mb="24px">
             <Flex alignItems="center">
-              <Text>{t('Expert Mode')}</Text>
+              <Text>{t("Expert Mode")}</Text>
               <QuestionHelper
-                text={t('Bypasses confirmation modals and allows high slippage trades. Use at your own risk.')}
+                text={t(
+                  "Bypasses confirmation modals and allows high slippage trades. Use at your own risk."
+                )}
                 placement="top-start"
                 ml="4px"
               />
@@ -270,46 +278,46 @@ const SettingsModal: React.FC<React.PropsWithChildren<InjectedModalProps>> = ({ 
                 }}
               />
             </Flex> */}
+  
           <Flex justifyContent="space-between" alignItems="center" mb="24px">
             <Flex alignItems="center">
-              <Text>{t('Use StableSwap by default')}</Text>
-              <QuestionHelper
-                text={
-                  <Flex>
-                    <Text mr="5px">
-                      {t(
-                        'Stableswap will enable users to save fees on trades. Output cannot be edited for routes that include StableSwap',
-                      )}
-                    </Text>
-                  </Flex>
-                }
+            <Text>{t("Use StableSwap by default")}</Text>
+            <QuestionHelper
+                text={t(
+                  "Stableswap will enable users to save fees on trades. Output cannot be edited for routes that include StableSwap"
+                )}
                 placement="top-start"
                 ml="4px"
               />
             </Flex>
             <Toggle
-              id="toggle-disable-smartRouter-button"
-              checked={isStableSwapByDefault}
-              onChange={(e) => setIsStableSwapByDefault(e.target.checked)}
+              checked={audioPlay}
+              onChange={toggleSetAudioMode}
               scale="md"
             />
           </Flex>
           <Flex justifyContent="space-between" alignItems="center" mb="24px">
             <Flex alignItems="center">
-              <Text>{t('Flippy sounds')}</Text>
+              <Text>{t("Flippy sounds")}</Text>
               <QuestionHelper
-                text={t('Fun sounds to make a truly immersive pancake-flipping trading experience')}
+                text={t(
+                  "Fun sounds to make a truly immersive pancake-flipping trading experience"
+                )}
                 placement="top-start"
                 ml="4px"
               />
             </Flex>
-            <Toggle checked={audioPlay} onChange={toggleSetAudioMode} scale="md" />
+            <Toggle
+              checked={audioPlay}
+              onChange={toggleSetAudioMode}
+              scale="md"
+            />
           </Flex>
         </>
         {/* )} */}
       </ScrollableContainer>
     </Modal>
-  )
-}
+  );
+};
 
-export default SettingsModal
+export default SettingsModal;
