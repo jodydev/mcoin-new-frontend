@@ -1,89 +1,126 @@
-import { useMemo } from 'react'
-import { ThemeProvider } from 'styled-components'
-import styled from 'styled-components'
-import { Text, Flex, CardBody, CardFooter, Button, AddIcon, Coming1 } from '@pancakeswap/uikit'
-import Link from 'next/link'
-import { useAccount } from 'wagmi'
-import { useTranslation } from '@pancakeswap/localization'
-import { useLPTokensWithBalanceByAccount } from 'views/Swap/StableSwap/hooks/useStableConfig'
-import FullPositionCard, { StableFullPositionCard } from '../../components/PositionCard'
-import { useTokenBalancesWithLoadingIndicator } from '../../state/wallet/hooks'
-import { usePairs, PairState } from '../../hooks/usePairs'
-import { toV2LiquidityToken, useTrackedTokenPairs } from '../../state/user/hooks'
-import Dots from '../../components/Loader/Dots'
-import { AppHeader, AppBody } from '../../components/App'
-import Page from '../Page'
+import { useMemo } from "react";
+import { FaInbox } from "react-icons/fa6";
+import { ThemeProvider } from "styled-components";
+import styled from "styled-components";
+import {
+  Text,
+  Flex,
+  CardBody,
+  CardFooter,
+  Button,
+  AddIcon,
+  Coming1,
+} from "@pancakeswap/uikit";
+import Link from "next/link";
+import { useAccount } from "wagmi";
+import { useTranslation } from "@pancakeswap/localization";
+import { useLPTokensWithBalanceByAccount } from "views/Swap/StableSwap/hooks/useStableConfig";
+import FullPositionCard, {
+  StableFullPositionCard,
+} from "../../components/PositionCard";
+import { useTokenBalancesWithLoadingIndicator } from "../../state/wallet/hooks";
+import { usePairs, PairState } from "../../hooks/usePairs";
+import {
+  toV2LiquidityToken,
+  useTrackedTokenPairs,
+} from "../../state/user/hooks";
+import Dots from "../../components/Loader/Dots";
+import { AppHeader, AppBody } from "../../components/App";
+import Page from "../Page";
 
 const Body = styled(CardBody)`
   background-color: ${({ theme }) => theme.colors.dropdownDeep};
-`
+`;
 
 export default function Pool() {
-  const { address: account } = useAccount()
-  const { t } = useTranslation()
+  const { address: account } = useAccount();
+  const { t } = useTranslation();
 
   // fetch the user's balances of all tracked V2 LP tokens
-  const trackedTokenPairs = useTrackedTokenPairs()
+  const trackedTokenPairs = useTrackedTokenPairs();
 
   const tokenPairsWithLiquidityTokens = useMemo(
-    () => trackedTokenPairs.map((tokens) => ({ liquidityToken: toV2LiquidityToken(tokens), tokens })),
-    [trackedTokenPairs],
-  )
+    () =>
+      trackedTokenPairs.map((tokens) => ({
+        liquidityToken: toV2LiquidityToken(tokens),
+        tokens,
+      })),
+    [trackedTokenPairs]
+  );
   const liquidityTokens = useMemo(
     () => tokenPairsWithLiquidityTokens.map((tpwlt) => tpwlt.liquidityToken),
-    [tokenPairsWithLiquidityTokens],
-  )
-  const [v2PairsBalances, fetchingV2PairBalances] = useTokenBalancesWithLoadingIndicator(
-    account ?? undefined,
-    liquidityTokens,
-  )
+    [tokenPairsWithLiquidityTokens]
+  );
+  const [v2PairsBalances, fetchingV2PairBalances] =
+    useTokenBalancesWithLoadingIndicator(account ?? undefined, liquidityTokens);
 
-  const stablePairs = useLPTokensWithBalanceByAccount(account)
+  const stablePairs = useLPTokensWithBalanceByAccount(account);
 
   // fetch the reserves for all V2 pools in which the user has a balance
   const liquidityTokensWithBalances = useMemo(
     () =>
       tokenPairsWithLiquidityTokens.filter(({ liquidityToken }) =>
-        v2PairsBalances[liquidityToken.address]?.greaterThan('0'),
+        v2PairsBalances[liquidityToken.address]?.greaterThan("0")
       ),
-    [tokenPairsWithLiquidityTokens, v2PairsBalances],
-  )
+    [tokenPairsWithLiquidityTokens, v2PairsBalances]
+  );
 
-  const v2Pairs = usePairs(liquidityTokensWithBalances.map(({ tokens }) => tokens))
+  const v2Pairs = usePairs(
+    liquidityTokensWithBalances.map(({ tokens }) => tokens)
+  );
   const v2IsLoading =
     fetchingV2PairBalances ||
     v2Pairs?.length < liquidityTokensWithBalances.length ||
-    (v2Pairs?.length && v2Pairs.every(([pairState]) => pairState === PairState.LOADING))
+    (v2Pairs?.length &&
+      v2Pairs.every(([pairState]) => pairState === PairState.LOADING));
   const allV2PairsWithLiquidity = v2Pairs
-    ?.filter(([pairState, pair]) => pairState === PairState.EXISTS && Boolean(pair))
-    .map(([, pair]) => pair)
+    ?.filter(
+      ([pairState, pair]) => pairState === PairState.EXISTS && Boolean(pair)
+    )
+    .map(([, pair]) => pair);
 
   const renderBody = () => {
     if (!account) {
       return (
-        <Text color="textSubtle" textAlign="center">
-          {t('Connect to a wallet to view your liquidity.')}
-        </Text>
-      )
+        <div
+          id="add-liquidity"
+          className="d-flex items-center justify-content-center rounded-3"
+        >
+          <div
+            id="icon-liquidity"
+            className="d-flex flex-column align-items-center"
+          >
+            <FaInbox className="fs-1 text-white mb-4" />
+            <p className="text-center text-white fs-5">
+              {t("Your liquidity will appear here")}
+            </p>
+          </div>
+        </div>
+      );
     }
     if (v2IsLoading) {
       return (
         <Text color="textSubtle" textAlign="center">
-          <Dots>{t('Loading')}</Dots>
+          <Dots>{t("Loading")}</Dots>
         </Text>
-      )
+      );
     }
 
-    let positionCards = []
+    let positionCards = [];
 
     if (allV2PairsWithLiquidity?.length > 0) {
       positionCards = allV2PairsWithLiquidity.map((v2Pair, index) => (
         <FullPositionCard
           key={v2Pair.liquidityToken.address}
           pair={v2Pair}
-          mb={Boolean(stablePairs?.length) || index < allV2PairsWithLiquidity.length - 1 ? '16px' : 0}
+          mb={
+            Boolean(stablePairs?.length) ||
+            index < allV2PairsWithLiquidity.length - 1
+              ? "16px"
+              : 0
+          }
         />
-      ))
+      ));
     }
 
     if (stablePairs?.length > 0) {
@@ -93,52 +130,50 @@ export default function Pool() {
           <StableFullPositionCard
             key={`stable-${stablePair.liquidityToken.address}`}
             pair={stablePair}
-            mb={index < stablePairs.length - 1 ? '16px' : 0}
+            mb={index < stablePairs.length - 1 ? "16px" : 0}
           />
         )),
-      ]
+      ];
     }
 
     if (positionCards?.length > 0) {
-      return positionCards
+      return positionCards;
     }
 
     return (
       <Text color="textSubtle" textAlign="center">
-        {t('No liquidity found.')}
+        {t("No liquidity found.")}
       </Text>
-    )
-  }
+    );
+  };
 
   return (
     <Page>
-      <Flex width={['328px', '100%']} height="100%" justifyContent="center" position="relative" alignItems="flex-start">
-        <AppBody>
-          <AppHeader title={t('Your Liquidity')} subtitle={t('Remove liquidity to receive tokens back')} />
-          <Body>
-            {renderBody()}
-            {account && !v2IsLoading && (
-              <Flex flexDirection="column" alignItems="center" mt="24px">
-                <Text color="textSubtle" mb="8px">
-                  {t("Don't see a pair you joined?")}
-                </Text>
-                <Link href="/find" passHref>
-                  <Button id="import-pool-link" variant="secondary" scale="sm" as="a">
-                    {t('Find other LP tokens')}
-                  </Button>
-                </Link>
-              </Flex>
-            )}
-          </Body>
-          <CardFooter style={{ textAlign: 'center' }}>
+      <div className="d-flex items-center justify-content-center">
+        <div className="card-2">
+          <AppHeader title={t("Your Liquidity")} subtitle={t("")} />
+          <p className="mb-0 fs-5 text-white text-center text-nowrap">
+            Remove liquidity to receive tokens back
+          </p>
+
+          <Body className="mt-5 mx-4">{renderBody()}</Body>
+          <CardFooter className="mt-3" style={{ textAlign: "center" }}>
             <Link href="/add" passHref>
-              <Button id="join-pool-button" width="100%" startIcon={<AddIcon color="white" />}>
-                {t('Add Liquidity')}
+              <Button id="join-pool-button" width="100%">
+                {t("Add Liquidity")}
               </Button>
             </Link>
+            <Link href="/find" passHref>
+              <p className="text-white mt-4 fs-5">
+                Don't see a pair you joined?{" "}
+                <span className="text-primary text-decoration-underline">
+                  Find other LP token
+                </span>
+              </p>
+            </Link>
           </CardFooter>
-        </AppBody>
-      </Flex>
+        </div>
+      </div>
     </Page>
-  )
+  );
 }

@@ -272,7 +272,7 @@ const Menu: React.FC<React.PropsWithChildren<NavProps>> = ({
                 {/* <SkeletonV2 variant="round" width="32px" height="32px" isDataReady={isMounted} ml="8px" >
                   <ThemeSwitcher isDark={isDark} toggleTheme={toggleTheme} />
                 </SkeletonV2> */}
-                <div className="button-connect-nav my-bg-primary p-1 rounded-5">
+                <div className="button-connect-nav my-bg-primary rounded-5">
                   {/* {leftSide} */}
                   {rightSide}
                 </div>

@@ -25,44 +25,40 @@ const AppHeaderContainer = styled(Flex)`
 
 const AppHeader: React.FC<React.PropsWithChildren<Props>> = ({ title, subtitle, helper, backTo, noConfig = false }) => {
   const [expertMode] = useExpertModeManager()
+
   return (
-    <AppHeaderContainer>
-      <Flex alignItems="center" width="100%" style={{ gap: '16px' }}>
-        {backTo &&
-          (typeof backTo === 'string' ? (
-            <Link passHref href={backTo}>
-              <IconButton as="a" scale="sm">
-                <ArrowBackIcon width="32px" />
-              </IconButton>
-            </Link>
-          ) : (
-            <IconButton scale="sm" variant="text" onClick={backTo}>
-              <ArrowBackIcon width="32px" />
-            </IconButton>
-          ))}
-        <Flex flexDirection="column" width="100%">
-          <Flex my="8px" alignItems="center" justifyContent="space-between">
-            <Flex>
-              <Heading as="h1">{title}</Heading>
-              {helper && <QuestionHelper text={helper} ml="4px" placement="top-start" />}
-            </Flex>
-            {!noConfig && (
-              <Flex alignItems="center">
-                <NotificationDot show={expertMode}>
-                  <GlobalSettings mode={SettingsMode.SWAP_LIQUIDITY} />
-                </NotificationDot>
-                <Transactions />
-              </Flex>
-            )}
-          </Flex>
-          <Flex alignItems="center">
-            <Text color="textSubtle" fontSize="14px">
-              {subtitle}
-            </Text>
-          </Flex>
-        </Flex>
+    <Flex className='bg-card' padding="10px" width="100%" alignItems="center" justifyContent="space-between">
+    <Flex
+      flexDirection="row"
+      alignItems="center"
+      justifyContent="center"
+      width="60%"
+      marginY={20}
+    ></Flex>
+    <Flex
+      flexDirection="row"
+      alignItems="center"
+      justifyContent="center"
+      width="50%"
+      marginY={20}
+    >
+      <p className="mb-0 fs-3 font-bold text-white text-center text-nowrap">{title}</p>
+    </Flex>
+    <Flex
+        style={{ gap: "15px", marginRight: "20px" }}
+        justifyContent="end"
+        alignItems="center"
+        width="60%"
+      >
+        <NotificationDot show={expertMode}>
+          <GlobalSettings
+            color="textSubtle"
+            mode={SettingsMode.SWAP_LIQUIDITY}
+          />
+        </NotificationDot>
       </Flex>
-    </AppHeaderContainer>
+      
+  </Flex>
   )
 }
 

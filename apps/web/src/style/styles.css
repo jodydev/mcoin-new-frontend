@@ -1,4 +1,4 @@
-@media (min-width: 1700px) {
+@media (min-width: 2200px) {
   .card {
     margin-top: 100px !important;
     max-width: 600px !important;
@@ -18,14 +18,94 @@
     top: 25% !important;
     left: 3% !important;
   }
+
+  .my-margin-page {
+    margin-left: 00% !important;
+  }
 }
 
-.card {
-  min-height: 600px;
-  min-width: 500px;
-  margin-top: 425px !important;
+@media (min-width: 1200px) and (max-width: 1700px) {
+  .my-margin-page {
+    margin-left: 0% !important;
+  }
+}
+
+@media (min-width: 600px) and (max-width: 1200px) {
+  .eiXjqJ {
+    display: none !important;
+  }
+
+  .my-margin-page {
+    margin-left: 0% !important;
+  }
+}
+
+@media (min-width: 600px) {
+  .card {
+    min-height: 600px !important;
+    min-width: 500px !important;
+    margin-top: 150px !important;
+    background-color: #1c1924 !important;
+    border-radius: 15px !important;
+  }
+}
+
+@media (max-width: 600px) {
+  .card {
+    max-height: 300px !important;
+    max-width: 300px !important;
+    margin-top: 150px !important;
+    background-color: #1c1924 !important;
+    border-radius: 15px !important;
+  }
+
+  .XrYeb {
+    top: 500px !important;
+    left: 20% !important;
+  }
+
+  .margin {
+    top: 10% !important;
+    left: 20% !important;
+  }
+
+  .kBBuLi {
+    top: 25% !important;
+    left: 3% !important;
+  }
+
+  .my-margin-page {
+    margin-left: -15% !important;
+  }
+
+  .eiXjqJ {
+    display: none !important;
+  }
+}
+
+.bg-card,
+.litzEd,
+.fVKkvw {
+  background-color: #1c1924 !important;
+}
+
+.card-2,
+.ekdKTf {
+  min-height: 500px !important;
+  min-width: 500px !important;
+  margin-top: 200px !important;
   background-color: #1c1924 !important;
   border-radius: 15px !important;
+}
+
+.jzzcEq,
+.fZQfbT {
+  border: none !important;
+}
+
+.fZQfbT {
+  border-radius: 0px !important;
+  padding: 20px !important;
 }
 
 .my-bg-primary {
@@ -45,13 +125,15 @@
   );
 }
 
-.my-bg-secondary {
+.my-bg-secondary,
+#join-pool-button {
   background: rgb(150, 123, 248);
   background: linear-gradient(
     90deg,
     rgba(150, 123, 248, 1) 0%,
     rgba(134, 236, 233, 1) 100%
   );
+  color: white;
 }
 
 .my-border {
@@ -245,7 +327,9 @@
   ) !important;
 }
 
-#connect-wallet button {
+#connect-wallet button,
+.dxhOxO .confirm-expert-mode {
+  color: #fff !important;
   background: rgb(150, 123, 248) !important;
   background: linear-gradient(
     90deg,
@@ -313,7 +397,7 @@
   height: 80px !important;
 }
 
-.switch-button-active {
+.switch-button-active, .confirm-expert-mode {
   background: rgb(150, 123, 248) !important;
   background: linear-gradient(
     90deg,
@@ -400,9 +484,11 @@
 }
 
 /* card connect wallet */
-.gdXGcT{
+.gdXGcT {
   top: 31% !important;
   left: 20% !important;
+  background-color: #131117 !important;
+  border-radius: 10px !important;
 }
 
 .kBBuLi {
@@ -454,10 +540,6 @@
   border: none !important;
   box-shadow: none !important;
   padding: 20px !important;
-}
-
-.la-dvAm {
-  height: 100% !important;
 }
 
 .dBmejX,
@@ -512,9 +594,10 @@ nav svg {
   display: none !important;
 }
 
-.button-connect-nav {
+.button-connect-nav{
   max-width: 250px !important;
   width: 100% !important;
+  padding: 20px !important;
 }
 
 .social {
@@ -534,7 +617,215 @@ nav svg {
   margin-left: 0px !important;
 }
 
-
-.dlHuEH{
+.dlHuEH {
   gap: 12px !important;
+}
+
+.add-liquidity,
+.bYemhg {
+  background-color: #24202e !important;
+  border-radius: 10px !important;
+  padding: 50px !important;
+  border: 1px solid #353547 !important;
+}
+
+.bPvmdm {
+  border: none !important;
+}
+
+#icon-liquidity svg {
+  font-size: 80px !important;
+}
+body {
+  overflow-x: hidden !important;
+}
+
+.fEOJdX {
+  border: none !important;
+  background-color: #131117 !important;
+}
+
+.kqakis {
+  display: none !important;
+}
+
+.diPytC {
+  background-color: #131117 !important;
+}
+
+.eKUQSd {
+  background-color: transparent !important;
+}
+
+.laeand {
+  background-color: transparent !important;
+  padding: 20px !important;
+  margin-left: 40px !important;
+  justify-content: end !important;
+}
+
+.laeand:hover {
+  cursor: pointer !important;
+}
+
+.hWrUFe {
+  display: none !important;
+}
+
+.irbnXq {
+  margin-right: 10px !important;
+}
+
+#swap-button {
+  color: white !important;
+}
+
+.la-dvAm {
+  height: 100% !important;
+  border: none !important;
+  border-radius: 0px !important;
+}
+
+.gXVXaw {
+  margin-top: 7px !important;
+}
+
+.eAsEkt {
+  border-radius: 10px !important;
+}
+
+.knuUrB {
+  padding-top: 5px !important;
+}
+
+.irbnXq {
+  margin-left: 20px !important;
+}
+
+.hsVmDE,
+.fPmkiB {
+  font-size: 16px !important;
+}
+
+.blCwef {
+  z-index: -50 !important;
+}
+
+.jlHeTx {
+  height: 50px !important;
+}
+
+.dqiPam {
+  margin-top: 10px !important;
+}
+
+.cbTFrO {
+  background-color: transparent !important;
+  z-index: 100 !important;
+}
+
+.jaFXSA, .jkVXPj {
+  display: none !important;
+}
+
+.hECyUW {
+  background-color: #1c1924 !important;
+}
+
+.kXtIFK{
+  width: 0% !important;
+}
+
+.eaHYMb{
+  grid-row-gap: 0px !important;
+}
+
+.bYemhg {
+  background-color: #1c1924 !important;
+  border-radius: 0px !important;
+  padding: 30px !important;
+  border: none !important;
+}
+
+.open-currency-select-button{
+  margin-right: 0px !important;
+  padding: 12px 45px !important;
+  border-radius: 8px !important;
+}
+
+
+.hECyUW, .jMXxLW{
+  display: none !important;
+}
+
+.card-body{
+  padding: 30px !important;
+}
+
+.eKparf{
+  padding: 25px !important;
+}
+
+.laxaIc {
+  color: #fff !important;
+  background: rgb(150, 123, 248) !important;
+  background: linear-gradient(
+    90deg,
+    rgba(150, 123, 248, 1) 0%,
+    rgba(134, 236, 233, 1) 100%
+  ) !important;
+  background-color: linear-gradient(
+    90deg,
+    rgba(150, 123, 248, 1) 0%,
+    rgba(134, 236, 233, 1) 100%
+  ) !important;
+}
+
+.cYAsoO{
+  color: #fff !important;
+  background: rgb(150, 123, 248) !important;
+  background: linear-gradient(
+    90deg,
+    rgba(150, 123, 248, 1) 0%,
+    rgba(134, 236, 233, 1) 100%
+  ) !important;
+  background-color: linear-gradient(
+    90deg,
+    rgba(150, 123, 248, 1) 0%,
+    rgba(134, 236, 233, 1) 100%
+  ) !important;
+}
+
+.bYRQXq{
+  margin-top: 0px !important;
+}
+
+.dMuXZY{
+  background: rgb(150, 123, 248) !important;
+  background: linear-gradient(
+    90deg,
+    rgba(150, 123, 248, 1) 0%,
+    rgba(134, 236, 233, 1) 100%
+  ) !important;
+  background-color: linear-gradient(
+    90deg,
+    rgba(150, 123, 248, 1) 0%,
+    rgba(134, 236, 233, 1) 100%
+  ) !important;
+  color: white !important;
+}
+
+.dxhOxO{
+  background: rgb(150, 123, 248) !important;
+  background: linear-gradient(
+    90deg,
+    rgba(150, 123, 248, 1) 0%,
+    rgba(134, 236, 233, 1) 100%
+  ) !important;
+  background-color: linear-gradient(
+    90deg,
+    rgba(150, 123, 248, 1) 0%,
+    rgba(134, 236, 233, 1) 100%
+  ) !important;
+  color: white !important;
 }

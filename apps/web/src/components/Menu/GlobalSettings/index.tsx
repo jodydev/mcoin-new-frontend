@@ -13,7 +13,7 @@ const GlobalSettings = ({ color, mr = "8px", mode }: Props) => {
 
   return (
     <Flex style={{ cursor: "pointer" }} onClick={onPresentSettingsModal}>
-      <IoMdSettings className="text-white fs-5" />
+      <IoMdSettings className="text-white fs-5 mb-1" />
     </Flex>
   );
 };

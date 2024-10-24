@@ -26,7 +26,7 @@ const Page: React.FC<
   const externalLinkUrl = isBSC ? 'https://bridge.pancakeswap.finance/' : ''
 
   return (
-    <>
+    <div className='my-margin-page'>
       <Swap.Page
         removePadding={removePadding}
         noMinHeight={noMinHeight}
@@ -38,7 +38,7 @@ const Page: React.FC<
       >
         {children}
       </Swap.Page>
-    </>
+    </div>
   )
 }
 
