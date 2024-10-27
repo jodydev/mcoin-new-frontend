@@ -59,7 +59,7 @@ export function ChoosePair({
         )}
         backTo="/liquidity"
       />
-      <div className="p-5 bg-card">
+      <div className="p-4 p-lg-5 bg-card">
         <div className="bg-card">
           <p className="fs-5 text-white text-start mb-4">
             {t("Choose a valid pair")}

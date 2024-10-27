@@ -152,7 +152,7 @@ export default function Pool() {
       <div className="d-flex items-center justify-content-center">
         <div className="card-2">
           <AppHeader title={t("Your Liquidity")} subtitle={t("")} />
-          <p className="mb-0 fs-5 text-white text-center text-nowrap">
+          <p className="mb-0 mx-3 mx-lg-0 fs-5 text-white text-start text-lg-center text-wrap text-lg-nowrap">
             Remove liquidity to receive tokens back
           </p>
 

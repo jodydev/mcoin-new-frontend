@@ -42,7 +42,7 @@ const AppHeader: React.FC<React.PropsWithChildren<Props>> = ({ title, subtitle, 
       width="50%"
       marginY={20}
     >
-      <p className="mb-0 fs-3 font-bold text-white text-center text-nowrap">{title}</p>
+      <p className="mb-0 fs-1 fs-lg-3 font-bold text-white text-center text-nowrap">{title}</p>
     </Flex>
     <Flex
         style={{ gap: "15px", marginRight: "20px" }}

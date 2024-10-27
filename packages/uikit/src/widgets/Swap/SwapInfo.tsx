@@ -23,12 +23,12 @@ export const SwapInfo = ({ allowedSlippage, price, onSlippageClick }: SwapInfoTy
       <RowBetween alignItems="center">{price}</RowBetween>
       <RowBetween alignItems="center">
         <div className="d-flex flex-row align-items-center gap-3">
-          <p className="fs-5">{t("Slippage Tolerance")}</p>
+          <p className="fs-4 my-3">{t("Slippage Tolerance")}</p>
           <FaPencilAlt onClick={onSlippageClick} color="primary" width="14px" />
         </div>
 
         {isMounted && (
-          <p className="fs-5 text-white fw-normal">
+          <p className="fs-4 text-white fw-normal">
             {allowedSlippage / 100}%
           </p>
         )}

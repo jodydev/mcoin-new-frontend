@@ -119,7 +119,7 @@ const CurrencyInputHeader: React.FC<React.PropsWithChildren<Props>> = ({
         width="50%"
         marginY={20}
       >
-        <h5 className="mb-0 fs-2 font-bold text-white text-center">{title}</h5>
+        <h5 className="mb-0 fs-2 font-bold text-white text-start text-lg-center ">{title}</h5>
       </Flex>
       <Flex
         style={{ gap: "15px" }}

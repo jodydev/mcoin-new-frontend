@@ -150,7 +150,7 @@ export default function Swap() {
 
           {/* //todo AGGIUNGERE QUI BOX SOCIAL MEDIA */}
           <div className="my-5">
-          <div className="social d-flex justify-content-center align-items-center h-100 w-100 mt-5">
+          <div className="social d-flex justify-content-center align-items-center h-100 w-100 mt-lg-5">
             <SocialEntry>
               <SocialLinks />
             </SocialEntry>
@@ -168,7 +168,7 @@ export default function Swap() {
           </div>
 
           <div>
-            <p className="text-center mt-5 fs-5 ">
+            <p className="text-center my-5 fs-5 ">
               ©2024 - M20 Chain, All rights reserved.
             </p>
           </div>

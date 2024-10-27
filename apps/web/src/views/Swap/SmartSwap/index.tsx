@@ -468,7 +468,7 @@ export const SmartSwapForm: React.FC<{
                   price={
                     Boolean(tradeInfo) && (
                       <>
-                        <p className="fs-5">{t("Price")}</p>
+                        <p className="fs-4">{t("Price:")}</p>
                         {isLoading ? (
                           <></>
                         ) : (

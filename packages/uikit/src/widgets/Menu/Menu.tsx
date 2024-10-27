@@ -196,7 +196,7 @@ const Menu: React.FC<React.PropsWithChildren<NavProps>> = ({
                   href="/"
                 />
 
-                <div className="d-flex flex-row w-100 my-margin">
+                <div className="ms-0 ms-lg-5 d-flex flex-row w-100 ">
                   {links.map(({ label, items: menuItems = [], href, icon, disabled }) => {
                     // const calloutClass = entry.calloutClass ? entry.calloutClass : undefined;
                     const statusColor = menuItems?.find((menuItem) => menuItem.status !== undefined)?.status?.color;

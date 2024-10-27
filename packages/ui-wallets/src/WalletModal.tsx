@@ -158,7 +158,7 @@ function MobileModal<T>({
           </Heading>
         </AtomBox>
       )}
-      <div className="w-100 h-100 bg-success ">
+      <div className="w-100 h-100">
         <WalletSelect
           displayCount={MOBILE_DEFAULT_DISPLAY_COUNT}
           wallets={walletsToShow}

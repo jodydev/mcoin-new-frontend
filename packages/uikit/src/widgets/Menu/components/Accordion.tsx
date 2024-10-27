@@ -56,7 +56,7 @@ const Accordion: React.FC<Props> = ({
     if (isPushed) {
       setIsOpen((prevState) => !prevState);
     } else {
-      pushNav(true);
+      // pushNav(true);
       setIsOpen(true);
     }
   };
@@ -91,7 +91,7 @@ const Accordion: React.FC<Props> = ({
   }
 
   return (
-    <div className="flex-row w-full ms-3">
+    <div className="flex-row w-lg-100 ms-3">
       <MenuEntry onClick={handleClick} className={className} isActive={isActive}>
         {hasSubItems ? <LinkLabel isActive={isActive}>{label}</LinkLabel>
          : 

@@ -19,8 +19,8 @@ export function TradePrice({ price }: TradePriceProps) {
     : `${price?.baseCurrency?.symbol} per ${price?.quoteCurrency?.symbol}`;
 
   return (
-    <div className="flex items-center mb-3">
-      <Text style={{ display: "flex", fontSize: "14px" }}>
+    <div className="flex items-start">
+      <Text style={{ display: "flex", fontSize: "18px" }}>
       {show ? (
         <>
         {formattedPrice ?? "-"} {label}
