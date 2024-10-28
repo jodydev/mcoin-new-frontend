@@ -56,7 +56,7 @@ const Modal: React.FC<React.PropsWithChildren<ModalProps>> = ({
     <ModalWrapper minWidth={minWidth} onDismiss={onDismiss} hideCloseButton={hideCloseButton} {...props}>
       <ModalHeader background={getThemeValue(theme, `colors.${headerBackground}`, headerBackground)}>
       <ModalTitle>
-        <p className="text-center text-white fs-5 fw-semibold mt-3 mb-1" style={{ flex: 1, textAlign: 'center' }}>{title}</p>
+        <p className="ms-5 text-center text-white fs-5 fw-semibold mt-3 mb-1" style={{ flex: 1, textAlign: 'center' }}>{title}</p>
         {!hideCloseButton && <ModalCloseButton onDismiss={onDismiss} style={{ marginLeft: 'auto' }} />}
       </ModalTitle>
       </ModalHeader>

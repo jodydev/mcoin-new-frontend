@@ -42,7 +42,7 @@
 
 @media (min-width: 1200px) and (max-width: 1700px) {
   .card {
-    margin-top: 100px !important;
+    margin-top: 50px !important;
     max-width: 600px !important;
   }
   .my-margin-page {
@@ -91,7 +91,6 @@
   .card {
     min-height: 600px !important;
     min-width: 500px !important;
-    margin-top: 150px !important;
     background-color: #1c1924 !important;
     border-radius: 15px !important;
   }
@@ -937,9 +936,6 @@ body {
   ) !important;
 }
 
-.bYRQXq {
-  margin-top: 0px !important;
-}
 
 .dMuXZY {
   background: rgb(150, 123, 248) !important;
@@ -982,6 +978,18 @@ body {
 }
 
 
-.la-dvAm{
+.la-dvAm {
+  border: none !important;
+  border-radius: 10px !important;
   min-width: 0px !important;
+  background-color: #131118 !important;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  overflow-y: auto;
+  min-height: 0vh;
+  max-height: calc(90vh - 73px);
+}
+.jwYdHe{
+  width: 300px !important;
 }
