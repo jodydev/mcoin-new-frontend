@@ -54,10 +54,6 @@
     top: 5% !important;
     left: 5% !important;
   }
-  .kXtIFK {
-    width: 0% !important;
-    margin-top: 0px !important;
-  }
   .card-2,
   .ekdKTf {
     min-height: 500px !important;
@@ -66,11 +62,8 @@
     background-color: #1c1924 !important;
     border-radius: 15px !important;
   }
-  .kXtIFK {
-    width: 0% !important;
-    margin-top: 100px !important;
-    margin-bottom: 100px !important;
-  }
+
+
   .kBBuLi {
     top: 25% !important;
     left: 3% !important;
@@ -88,6 +81,11 @@
 }
 
 @media (min-width: 600px) {
+  .kXtIFK {
+    max-width: 500px !important;
+    margin-top: 100px !important;
+    margin-bottom: 100px !important;
+  }
   .card {
     min-height: 600px !important;
     min-width: 500px !important;
@@ -146,6 +144,11 @@ nav {
 }
 
 @media (max-width: 600px) {
+  .kXtIFK {
+    max-width: 500px !important;
+    margin-top: 0px !important;
+    margin-bottom: 100px !important;
+  }
   .card {
     max-width: 350px !important;
     margin-top: 25px !important;
@@ -175,11 +178,6 @@ nav {
     display: none !important;
   }
 
-  /* .dJwFFB{
-    justify-content: start !important;
-    margin-right: 40px !important;
-  } */
-
   .dtJWNB {
     justify-content: start !important;
   }
@@ -192,7 +190,12 @@ nav {
   .XrYeb {
     bottom: 0px !important;
     left: 0px !important;
-    min-width: 0px !important;
+    min-height: 400px !important;
+    min-width: 200px !important;
+    width: 200px !important;
+    position: absolute !important;
+    background-color: #131118 !important;
+    border-radius: 10px !important;
   }
 
   .margin {
@@ -219,7 +222,7 @@ nav {
 
   .gXVXaw{
     font-size: 12px !important;
-    margin-left: -10px !important;
+    margin-left: -20px !important;
   }
 
   .eZZnAa, .ghjkaG{
@@ -275,6 +278,10 @@ nav {
     border: none !important;
     border-radius: 0px !important;
     min-width: 0px !important;
+  }
+  .laeand {
+    padding-left: 20px !important;
+    padding-right: 40px !important;
   }
 }
 
@@ -809,7 +816,7 @@ body {
   background-color: transparent !important;
   justify-content: center !important;
   align-items: center !important;
-  margin-left: 20% !important;
+  margin-left: 18% !important;
 }
 
 .laeand:hover {
@@ -990,6 +997,28 @@ body {
   min-height: 0vh;
   max-height: calc(90vh - 73px);
 }
-.jwYdHe{
-  width: 300px !important;
+
+.gZaptP{
+  position: static !important;
+}
+
+
+
+
+.eRsogM{
+  margin-top: 50px !important;
+}
+
+/* .ehLbjW{
+  margin-top: 20px !important;
+  margin-bottom: 20px !important;
+} */
+
+.gTGbmJ{
+  margin-top: 20px !important;
+  margin-bottom: 20px !important;
+}
+
+.pancake-button--loading{
+  margin-top: 20px !important;
 }
