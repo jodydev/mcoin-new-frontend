@@ -149,7 +149,7 @@ export default function Swap() {
           <SmartSwapForm handleOutputSelect={handleOutputSelect} />
 
           {/* //todo AGGIUNGERE QUI BOX SOCIAL MEDIA */}
-          <div className="my-5">
+          <div className="mt-5 my-lg-5">
           <div className="social d-flex justify-content-center align-items-center h-100 w-100 mt-lg-5">
             <SocialEntry>
               <SocialLinks />
@@ -160,10 +160,10 @@ export default function Swap() {
 
           <div className="d-flex flex-row justify-content-center align-items-center mt-4">
             <div className=" border-right">
-              <p className="text-center mt-3 me-5 fs-5">M20 Chain</p>
+              <a href="" className="text-center mt-3 me-5 fs-5">M20 Chain</a>
             </div>
             <div>
-              <p className="text-center mt-3 ms-5 fs-5">M20 Spaw</p>
+              <p className="text-center mt-3 ms-5 fs-5">M20 Swap</p>
             </div>
           </div>
 

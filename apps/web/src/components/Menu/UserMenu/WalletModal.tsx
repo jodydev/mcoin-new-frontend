@@ -79,7 +79,7 @@ const WalletModal: React.FC<React.PropsWithChildren<WalletModalProps>> = ({
   }, [])
 
   return (
-    <ModalContainer title={t('Welcome!')} $minWidth="360px">
+    <ModalContainer id="modal-wallet-info-box" title={t('Welcome!')} $minWidth="360px">
       <ModalHeader>
         <ModalTitle>
           <Heading>{t('Wallet')}</Heading>
@@ -90,7 +90,7 @@ const WalletModal: React.FC<React.PropsWithChildren<WalletModalProps>> = ({
       </ModalHeader>
       {/* {view !== WalletView.WRONG_NETWORK && <TabsComponent view={view} handleClick={handleClick} />} */}
       {/* <ModalBody p="24px" width="100%"> */}
-      <ModalBody p="8px" width="100%">
+      <div id='modal-wallet-info'>
         {view === WalletView.WALLET_INFO && (
           <>
             <Region>
@@ -103,7 +103,7 @@ const WalletModal: React.FC<React.PropsWithChildren<WalletModalProps>> = ({
         )}
         {/* {view === WalletView.TRANSACTIONS && <WalletTransactions onDismiss={onDismiss} />} */}
         {view === WalletView.WRONG_NETWORK && <WalletWrongNetwork onDismiss={onDismiss} />}
-      </ModalBody>
+      </div>
     </ModalContainer>
   )
 }

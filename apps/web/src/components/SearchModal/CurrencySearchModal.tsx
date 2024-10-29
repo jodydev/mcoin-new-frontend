@@ -180,7 +180,7 @@ export default function CurrencySearchModal({
           <ModalCloseButton onDismiss={onDismiss} />
         </div>
       </div>
-      <StyledModalBody>
+      <div id="modal-search">
         {modalView === CurrencyModalView.search ? (
           <CurrencySearch
             onCurrencySelect={handleCurrencySelect}
@@ -233,7 +233,7 @@ export default function CurrencySearchModal({
             </Button>
           </div>
         )}
-      </StyledModalBody>
+      </div>
     </StyledModalContainer>
   );
 }

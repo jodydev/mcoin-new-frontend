@@ -1,5 +1,7 @@
 import { range } from "lodash";
 import { Language } from "../LangSelector/types";
+import { IoEarthSharp } from "react-icons/io5";
+import { SiGitbook } from "react-icons/si";
 import { FooterLinkType } from "./types";
 import {
   TwitterIcon,
@@ -105,13 +107,13 @@ export const socials = [
   },
   {
     label: "Medium",
-    icon: MediumIcon,
-    href: "https://medium.com/@CyberglowCS",
+    icon: IoEarthSharp,
+    href: "https://m20chain.com/",
   },
   {
-    label: "Link Tree",
-    icon: ResourcesIcon,
-    href: "https://docs.cyberglow.finance",
+    label: "GitBook",
+    icon: SiGitbook,
+    href: "https://www.gitbook.com/@m20chain",
   },
   // {
   //   label: "Github",
