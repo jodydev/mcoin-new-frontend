@@ -145,11 +145,11 @@ export default function Swap() {
         </ModalV2> */}
 
         {/* //todo DA CAMBIARE VALORE IN FILE CSS DI MY POSITION QUANDO FARO MEDIA QUERY MOBILE */}
-        <div id="social" className="d-flex flex-column justify-content-center align-items-center">
+        <div id="social" className="d-flex flex-column justify-content-center align-items-center mb-5">
           <SmartSwapForm handleOutputSelect={handleOutputSelect} />
 
           {/* //todo AGGIUNGERE QUI BOX SOCIAL MEDIA */}
-          <div className="mt-5 my-lg-5">
+          <div className="mt-5 mt-lg-0 my-lg-5">
           <div className="social d-flex justify-content-center align-items-center h-100 w-100 mt-lg-5">
             <SocialEntry>
               <SocialLinks />
@@ -160,10 +160,10 @@ export default function Swap() {
 
           <div className="d-flex flex-row justify-content-center align-items-center mt-4">
             <div className=" border-right">
-              <a href="" className="text-center mt-3 me-5 fs-5">M20 Chain</a>
+              <a href="https://m20chain.com/" className="text-center text-white me-5 fs-5">M20 Chain</a>
             </div>
             <div>
-              <p className="text-center mt-3 ms-5 fs-5">M20 Swap</p>
+              <p className="text-center ms-5 fs-5">M20 Swap</p>
             </div>
           </div>
 

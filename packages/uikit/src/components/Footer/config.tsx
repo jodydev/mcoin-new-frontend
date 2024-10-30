@@ -106,7 +106,7 @@ export const socials = [
     href: "https://www.instagram.com/m20chain/",
   },
   {
-    label: "Medium",
+    label: "WebSite",
     icon: IoEarthSharp,
     href: "https://m20chain.com/",
   },

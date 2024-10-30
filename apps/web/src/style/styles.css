@@ -81,6 +81,9 @@
 }
 
 @media (min-width: 600px) {
+  #modal-wallet-info {
+    padding: 20px !important;
+  }
   .kXtIFK {
     max-width: 500px !important;
     margin-top: 100px !important;
@@ -1048,4 +1051,9 @@ body {
 
 #modal-wallet-info-box{
   background-color: #131117 !important;
+  border-radius: 10px !important;
+}
+
+.desktop-icon{
+  object-fit: contain !important;
 }
